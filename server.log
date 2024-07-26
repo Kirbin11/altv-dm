@@ -1,0 +1,46 @@
+[18:39:36] alt:V Server 16.1.1 (release)
+[18:39:36] Starting alt:V Server on [::]:7788
+[18:39:36][Warning] Running a production server without a CDN is highly discouraged, consider setting a CDN URL
+[18:39:36] Loading resource chat
+[18:39:36] Loaded resource chat
+[18:39:36] Loading resource freeroam
+[18:39:36][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
+[18:39:36][Warning] Import 'alt:chat' instead to silence this warning.
+[18:39:36] Loaded resource freeroam
+[18:39:36] Required server permissions:
+[18:39:36] Optional server permissions:
+[18:39:36] Starting HTTP server on [::]:7788
+[18:39:36] Main thread started (ThreadId: 19216)
+[18:39:36] EntityStreamer thread started (ThreadId: 24200)
+[18:39:36] SyncSend thread started (ThreadId: 14448)
+[18:39:36] SyncSend thread started (ThreadId: 24844)
+[18:39:36] SyncSend thread started (ThreadId: 21676)
+[18:39:36] SyncSend thread started (ThreadId: 15908)
+[18:39:36] SyncSend thread started (ThreadId: 15488)
+[18:39:36] SyncSend thread started (ThreadId: 12612)
+[18:39:36] SyncSend thread started (ThreadId: 25472)
+[18:39:36] SyncSend thread started (ThreadId: 3568)
+[18:39:36] SyncReceive thread started (ThreadId: 24532)
+[18:39:36] SyncReceive thread started (ThreadId: 21912)
+[18:39:36] SyncReceive thread started (ThreadId: 16876)
+[18:39:36] NetworkWorker #1 thread started (ThreadId: 23792)
+[18:39:36] SyncReceive thread started (ThreadId: 22968)
+[18:39:36] Console thread started (ThreadId: 21444)
+[18:39:36][Warning] Server started in debug mode
+[18:39:51][Error] HTTP Request failed, curl code: 28
+[18:39:51][Error] Master server connect failed. Return code: -28. Attempt #1
+[18:40:06][Error] HTTP Request failed, curl code: 28
+[18:40:06][Error] Master server connect failed. Return code: -28. Attempt #2
+[18:40:21][Error] HTTP Request failed, curl code: 28
+[18:40:21][Error] Master server connect failed. Return code: -28. Attempt #3
+[18:40:23] alt::CVoiceManager::Stop begin
+[18:40:23] alt::CVoiceManager::Stop end
+[18:40:23] Stopping resource chat
+[18:40:23] Stopping resource freeroam
+[18:40:23] Stopped resource freeroam
+[18:40:23] Stopped resource chat
+[18:40:36][Error] HTTP Request failed, curl code: 28
+[18:40:36][Error] Master server connect failed. Return code: -28. Attempt #4
+[18:40:36] alt::CVoiceManager::Stop begin
+[18:40:36] alt::CVoiceManager::Stop end
+[18:40:36] Server shutdown

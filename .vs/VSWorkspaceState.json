@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\resources",
+    "\\resources\\freeroam",
+    "\\resources\\freeroam\\server",
+    "\\resources\\gangwar",
+    "\\resources\\gangwar\\client",
+    "\\resources\\gangwar\\server"
+  ],
+  "SelectedNode": "\\resources\\freeroam\\server\\index.js",
+  "PreviewInSolutionExplorer": false
+}

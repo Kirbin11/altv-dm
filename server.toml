@@ -1,0 +1,13 @@
+name = 'alt:V Server'
+debug = true
+port = 7788
+players = 128
+# password = 'ultra-password'
+announce = true
+token = 'b932ca4d-b033-462f-8de1-561fa9f0a80f'
+gamemode = 'Freeroam'
+website = 'example.com'
+language = 'en'
+description = 'alt:V Sample Server'
+modules = ['js-module', 'js-bytecode-module']
+resources = ['chat', 'freeroam']
