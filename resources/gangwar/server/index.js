@@ -16,12 +16,13 @@ function addToBlacklist(info) {
 }
 
 const vehicles = {
-  ballas: ["chino2", "buccaneer2", "buccaneer", "faction"],
+  ballas: ["karby"],
   families: ["faction2", "blade", "gauntlet", "impaler"],
   vagos: ["ellie", "chino", "dukes", "impaler"],
 };
 
 const weapons = {
+  WEAPON_INFINITYBLADE: "Infinity Blade",
   WEAPON_KNIFE: "Knife",
   WEAPON_BAT: "Bat",
   WEAPON_BOTTLE: "Bottle",
@@ -55,7 +56,7 @@ for (let w in weapons) {
   weaponHashes[alt.hash(w)] = weapons[w];
 }
 
-const availableWeapons = ["WEAPON_KNIFE", "WEAPON_BAT", "WEAPON_BOTTLE", "WEAPON_WRENCH", "WEAPON_PISTOL", "WEAPON_HEAVYPISTOL", "WEAPON_REVOLVER", "WEAPON_MICROSMG", "WEAPON_SMG", "WEAPON_COMBATPDW", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_PUMPSHOTGUN"];
+const availableWeapons = ["WEAPON_INFINITYBLADE", "WEAPON_KNIFE", "WEAPON_BAT", "WEAPON_BOTTLE", "WEAPON_WRENCH", "WEAPON_PISTOL", "WEAPON_HEAVYPISTOL", "WEAPON_REVOLVER", "WEAPON_MICROSMG", "WEAPON_SMG", "WEAPON_COMBATPDW", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_PUMPSHOTGUN"];
 
 function giveWeapons(player) {
   for (const weapon of availableWeapons) {
@@ -130,8 +131,8 @@ const checkpoints = {
 };
 
 for (let i in positions) {
-  checkpoints[i].vehicle = new alt.Checkpoint(45, positions[i].vehicle.x, positions[i].vehicle.y, positions[i].vehicle.z - 1.1, 5, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255);
-  checkpoints[i].weapon = new alt.Checkpoint(45, positions[i].weapon.x, positions[i].weapon.y, positions[i].weapon.z - 1.1, 1, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255);
+  checkpoints[i].vehicle = new alt.Checkpoint(45, positions[i].vehicle.x, positions[i].vehicle.y, positions[i].vehicle.z - 1.1, 5, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255, 200);
+  checkpoints[i].weapon = new alt.Checkpoint(45, positions[i].weapon.x, positions[i].weapon.y, positions[i].weapon.z - 1.1, 1, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255, 200);
 }
 
 const currentTurfPoints = {
@@ -521,7 +522,7 @@ alt.setInterval(() => {
     if (lastPos) {
       if (getDistanceBetweenPoints(lastPos, p.pos) <= 1) {
         chat.broadcast(`${p.name} {FFFFFF}was kicked for being AFK`);
-        p.kick();
+        //p.kick();
       } else {
         p.setMeta("lastPos", p.pos);
       }
