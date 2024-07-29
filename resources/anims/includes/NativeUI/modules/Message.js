@@ -46,7 +46,11 @@ export default class Message {
             this._transitionOutTimeout = null;
         }
         if (this._transitionOutFinishedTimeout != null) {
-            alt.clearTimeout(this._transitionOutFinishedTimeout);
+            try {
+                alt.clearTimeout(this._transitionOutFinishedTimeout);
+            } catch (error) {
+                // console.error(error)
+            }
             this._transitionOutFinishedTimeout = null;
         }
         this._scaleform.callFunction(this._transitionOutAnimName);

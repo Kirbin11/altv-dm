@@ -67,4 +67,12 @@ alt.onServer('setPedIntoVehicle', async (vehicle) => {
     });
 });
 
+alt.onServer('vehicleSpawned', (vehicle) => {
+    alt.log('setting off coliision.');
+    alt.log(vehicle);
+    alt.log(alt.Player.local);
+    native.setEntityCompletelyDisableCollision(vehicle, true, true);
+});
+
+
 alt.log('[VVS] Client-Side Loaded.');

@@ -15,6 +15,7 @@ alt.onClient('playerSpawnVehicle', (player, model) => {
     }
 
     const vehicle = new alt.Vehicle(model, player.pos.x, player.pos.y, player.pos.z, 0, 0, 0);
+    alt.emitAllClients('vehicleSpawned', vehicle);
     player.vehicles.push(vehicle);
 
     alt.emitClient(player, 'setPedIntoVehicle', vehicle);

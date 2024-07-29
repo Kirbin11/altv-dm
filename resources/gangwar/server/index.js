@@ -99,8 +99,8 @@ const positions = {
       { x: 118.9186, y: -1934.2681, z: 20.7707 },
       { x: 105.7318, y: -1923.4154, z: 20.737 },
     ],
-    weapon: { x: 84.989, y: -1958.6241, z: 21.1076 },
-    vehicle: { x: 105.7186, y: -1941.5867, z: 20.7875 },
+    weapon: { x: 97, y: -1951, z: 20 },
+    vehicle: { x: 111, y: -1945, z: 20 },
   },
   families: {
     spawns: [
@@ -114,6 +114,7 @@ const positions = {
     vehicle: { x: -183.5736, y: -1587.5999, z: 34.8234 },
   },
 };
+
 
 const checkpoints = {
   ballas: {
@@ -131,8 +132,8 @@ const checkpoints = {
 };
 
 for (let i in positions) {
-  checkpoints[i].vehicle = new alt.Checkpoint(45, positions[i].vehicle.x, positions[i].vehicle.y, positions[i].vehicle.z - 1.1, 5, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255, 200);
-  checkpoints[i].weapon = new alt.Checkpoint(45, positions[i].weapon.x, positions[i].weapon.y, positions[i].weapon.z - 1.1, 1, 1, colors[i].rgba.r, colors[i].rgba.g, colors[i].rgba.b, 255, 200);
+  checkpoints[i].vehicle = new alt.Checkpoint(45, new alt.Vector3(positions[i].vehicle.x, positions[i].vehicle.y, positions[i].vehicle.z), 1, 1, alt.RGBA.green, 100);
+  checkpoints[i].weapon = new alt.Checkpoint(45, new alt.Vector3(positions[i].weapon.x, positions[i].weapon.y, positions[i].weapon.z), 0.5, 1, alt.RGBA.green, 100);
 }
 
 const currentTurfPoints = {
@@ -427,6 +428,8 @@ alt.onClient("action", (player) => {
     curVeh = new alt.Vehicle(nextModel, pos.x + 2, pos.y, pos.z, 0, 0, 0);
     curVeh.customPrimaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
     curVeh.customSecondaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
+    alt.emitAllClients('vehicleSpawned2', curVeh);
+    
     player.setMeta("vehicle", curVeh);
     player.setMeta("canSpawnVehicle", Date.now() + 400);
   } else if (cp == 2) {
@@ -515,19 +518,19 @@ function getDistanceBetweenPoints(pos1, pos2) {
   return Math.sqrt(dX * dX + dY * dY + dZ * dZ);
 }
 
-alt.setInterval(() => {
-  for (let p of alt.Player.all) {
-    if (!p.valid) continue;
-    const lastPos = p.getMeta("lastPos");
-    if (lastPos) {
-      if (getDistanceBetweenPoints(lastPos, p.pos) <= 1) {
-        chat.broadcast(`${p.name} {FFFFFF}was kicked for being AFK`);
-        //p.kick();
-      } else {
-        p.setMeta("lastPos", p.pos);
-      }
-    } else {
-      p.setMeta("lastPos", p.pos);
-    }
-  }
-}, 240000);
+// alt.setInterval(() => {
+//   for (let p of alt.Player.all) {
+//     if (!p.valid) continue;
+//     const lastPos = p.getMeta("lastPos");
+//     if (lastPos) {
+//       if (getDistanceBetweenPoints(lastPos, p.pos) <= 1) {
+//         chat.broadcast(`${p.name} {FFFFFF}was kicked for being AFK`);
+//         //p.kick();
+//       } else {
+//         p.setMeta("lastPos", p.pos);
+//       }
+//     } else {
+//       p.setMeta("lastPos", p.pos);
+//     }
+//   }
+// }, 240000);

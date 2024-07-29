@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\modules\\js-module",
     "\\resources",
-    "\\resources\\anims\\includes",
-    "\\resources\\freeroam-extended\\server",
-    "\\resources\\speedometer",
-    "\\resources\\speedometer\\server",
-    "\\resources\\veh-spawner\\html",
-    "\\resources\\veh-spawner\\html\\scripts",
+    "\\resources\\anims",
+    "\\resources\\gangwar",
+    "\\resources\\gangwar\\client",
+    "\\resources\\gangwar\\server",
+    "\\resources\\speedometer\\client",
+    "\\resources\\speedometer\\client\\speedometr",
+    "\\resources\\wasted",
     "\\resources\\wasted\\client"
   ],
-  "SelectedNode": "\\resources\\speedometer\\client\\client.js",
+  "SelectedNode": "\\resources\\anims\\includes",
   "PreviewInSolutionExplorer": false
 }

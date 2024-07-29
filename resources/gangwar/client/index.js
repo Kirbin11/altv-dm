@@ -117,8 +117,8 @@ const positions = {
       { x: 118.9186, y: -1934.2681, z: 20.7707 },
       { x: 105.7318, y: -1923.4154, z: 20.737 },
     ],
-    weapon: { x: 84.989, y: -1958.6241, z: 21.1076 },
-    vehicle: { x: 105.7186, y: -1941.5867, z: 20.7875 },
+    weapon: { x: 97, y: -1951, z: 20 },
+    vehicle: { x: 111, y: -1945, z: 20 },
   },
   families: {
     spawns: [
@@ -210,6 +210,8 @@ alt.onServer("updateTeam", (team) => {
   vehicleBlip.name = "Vehicle provider";
   vehicleBlip.alpha = 200;
   vehicleBlip.shortRange = true;
+
+  loadCheckpoints();
 });
 
 const colors = {
@@ -218,12 +220,47 @@ const colors = {
   vagos: "FFBF00",
 };
 
+alt.setInterval(() => {
+  game.invalidateIdleCam();
+}, 25000);
+
+alt.setInterval(() => {
+  alt.Player.local.stamina = 100;
+}, 8000);
+
 alt.onServer("applyAppearance", (team) => {
+// const redMarker2 = new alt.Utils.Marker(new alt.Vector3(x - 10, y+10, z), { type: 2 }); // стрелка
+// const redMarkxcer3 = new alt.Utils.Marker(new alt.Vector3(x4 - 20, y4+20, z), { type: 28 }); // шарик
+// const redMaqwrker4 = new alt.Utils.Marker(new alt.Vector3(x4- 25, y4+25, z), { type: 29 }); // бабки
+// const redMazxcrker5 = new alt.Utils.Marker(new alt.Vector3(x4 - 30, y4+30, z), { type: 30 }); // палочки типа вход
+
+
   const components = clothes[team];
   for (let c in components) {
     game.setPedComponentVariation(alt.Player.local.scriptID, parseInt(c), components[c].drawable, components[c].texture, 0);
   }
 });
+
+function loadCheckpoints() {
+  const pos = new alt.Vector3(positions[myTeam].vehicle.x, positions[myTeam].vehicle.y, positions[myTeam].vehicle.z);
+const pos2 = new alt.Vector3(positions[myTeam].weapon.x, positions[myTeam].weapon.y, positions[myTeam].weapon.z);
+
+new alt.Checkpoint(47, pos, pos, 1, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+new alt.Checkpoint(47, pos2, pos2, 0.5, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+
+const labelVehPos = pos;
+const labelWeapPos = pos2;
+const labelRot = new alt.Vector3(0, 0, -0.253);
+const labelColor = new alt.RGBA(255, 255, 255, 255);
+const labelOutlineColor = new alt.RGBA(0, 0, 0, 80);
+const labelFontSize = 32;
+const labelFontScale = 2;
+const labelOutlineWidth = .25;
+
+new alt.TextLabel('Взять тачку', 'Segoe UI', labelFontSize, labelFontScale, labelVehPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+new alt.TextLabel('Взять ганы', 'Segoe UI', labelFontSize, labelFontScale, labelWeapPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+
+}
 
 alt.onServer("updateTeamPoints", (info) => {
   let myTeamPoints = info[myTeam];
@@ -335,13 +372,21 @@ alt.everyTick(() => {
 alt.onServer("showInfo", (text) => {
   game.beginTextCommandDisplayHelp("STRING");
   game.addTextComponentSubstringKeyboardDisplay(text);
-  game.endTextCommandDisplayHelp(0, 0, 0, -1);
+  game.endTextCommandDisplayHelp(0, 0, true, -1);
 });
 
 alt.onServer("updatePlayersOnline", (players) => {
   if (!viewLoaded) return;
   mainView.emit("updatePlayersOnline", players);
 });
+
+alt.onServer('vehicleSpawned2', (vehicle) => {
+  alt.log('setting off 2.');
+  alt.log(vehicle);
+  alt.log(alt.Player.local);
+  game.setEntityNoCollisionEntity(alt.Player.local, vehicle, false);
+});
+
 
 function loadIpls() {
   alt.requestIpl("chop_props");

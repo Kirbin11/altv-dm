@@ -32,7 +32,7 @@ export default class Scaleform {
                     }
                 case "string":
                     {
-                        game.scaleformMovieMethodAddParamPlayerNameString(arg);
+                        game.scaleformMovieMethodAddParamPlayerNameString(arg.toString());
                         break;
                     }
                 case "boolean":
