@@ -1,0 +1,70 @@
+[19:53:25] alt:V Server 16.1.1 (release)
+[19:53:25] Starting alt:V Server on [::]:7788
+[19:53:25] Loading resource weapon-addon
+[19:53:25] Loaded resource weapon-addon
+[19:53:25] Loading resource vehicle-addon
+[19:53:25] Loaded resource vehicle-addon
+[19:53:25] Loading resource chat
+[19:53:25] Loaded resource chat
+[19:53:25] Loading resource admin
+[19:53:25][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
+[19:53:25][Warning] Import 'alt:chat' instead to silence this warning.
+[19:53:25] Loaded resource admin
+[19:53:25] Loading resource gangwar
+[19:53:25][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
+[19:53:25][Warning] Import 'alt:chat' instead to silence this warning.
+[19:53:25] Loaded resource gangwar
+[19:53:25] Loading resource anims
+[19:53:25] Loaded resource anims
+[19:53:25] Loading resource streetnames
+[19:53:25] Loaded resource streetnames
+[19:53:25] Loading resource wasted
+[19:53:26] Loaded resource wasted
+[19:53:26] Loading resource pickups
+[19:53:26] Loaded resource pickups
+[19:53:26] Loading resource players-list
+[19:53:26] Loaded resource players-list
+[19:53:26] Loading resource veh-spawner
+[19:53:26] Loaded resource veh-spawner
+[19:53:26] Loading resource speedometer
+[19:53:26] Loaded resource speedometer
+[19:53:26] Loading resource hitmarker
+[19:53:26] Loaded resource hitmarker
+[19:53:26] Loading resource weapons-shop
+[19:53:26] Loaded resource weapons-shop
+[19:53:26] Loading resource noclip
+[19:53:26] Loaded resource noclip
+[19:53:26] Required server permissions:
+[19:53:26] Optional server permissions:
+[19:53:26] Starting HTTP server on [::]:7788
+[19:53:26] Main thread started (ThreadId: 22080)
+[19:53:26] EntityStreamer thread started (ThreadId: 20568)
+[19:53:26] SyncSend thread started (ThreadId: 14260)
+[19:53:26] SyncSend thread started (ThreadId: 17328)
+[19:53:26] SyncSend thread started (ThreadId: 5952)
+[19:53:26] SyncSend thread started (ThreadId: 21388)
+[19:53:26] SyncSend thread started (ThreadId: 32)
+[19:53:26] SyncSend thread started (ThreadId: 19264)
+[19:53:26] SyncSend thread started (ThreadId: 20800)
+[19:53:26] SyncSend thread started (ThreadId: 19852)
+[19:53:26] NetworkWorker #1 thread started (ThreadId: 18596)
+[19:53:26] SyncReceive thread started (ThreadId: 20848)
+[19:53:26] SyncReceive thread started (ThreadId: 18328)
+[19:53:26] SyncReceive thread started (ThreadId: 12664)
+[19:53:26] SyncReceive thread started (ThreadId: 3440)
+[19:53:26] Console thread started (ThreadId: 16360)
+[19:53:26][Warning] Server started in debug mode
+[19:54:43] Sending accept 1 kirbin
+[19:54:43] kirbin connected
+[19:54:44] View loaded for kirbin
+[19:54:49] kirbin joined ballas
+[19:54:49] here Vector3{ x: 0.0000, y: 0.0000, z: 1.2924 }
+[19:54:49] createForPlayer [object Object]
+[19:54:49] spawnPickups caught in Pickups
+[19:54:49] sent spawnPickups
+[19:55:00] [chat:cmd] kirbin: /pos
+[19:55:00] Position: 88.45714569091797, -2017.5560302734375, 20.905517578125
+[19:55:05] [chat:cmd] kirbin: /pos
+[19:55:05] Position: 20.76923179626465, -1786.5889892578125, 71.994140625
+[19:55:08] [chat:cmd] kirbin: /pos
+[19:55:08] Position: -20.057140350341797, -1694.5977783203125, 34.2506103515625

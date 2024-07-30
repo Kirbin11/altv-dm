@@ -5,7 +5,6 @@ const STREAM_RANGE = 200;
 const OBJECTS = {};
 let LAST_POS = null;
 function createObject(name, model, pos){
-    alt.log('creating object');
     pickups[name] = native.createObject(model, 102, -1949, 21, false, false, false);//.x, pos.y, pos.z, false, false, false);
     native.freezeEntityPosition(pickups[name], true);
     native.setEntityCollision(pickups[name], false, false);
@@ -19,7 +18,6 @@ alt.on('resourceStop',()=>{
 });
 
 alt.onServer("pickups:create", (name, model, pos) => {
-    alt.log(`Request Recieved`);
     OBJECTS[name] = {
         model,
         pos,
@@ -61,7 +59,6 @@ alt.onServer("pickups:remove", (name) => {
     if(pickup) {
         native.deleteObject(pickup);
         delete pickups[name];
-        alt.log('removing pickup from client');
     }
 });
 
