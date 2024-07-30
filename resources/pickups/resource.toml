@@ -1,4 +1,4 @@
-client-files = [ 'client.js', 'worker.js' ]
+client-files = [ 'client.js']
 client-main = 'client.js'
 main = 'server.js'
 type = 'js'

@@ -11,27 +11,27 @@ website = 'example.com'
 language = 'en'
 description = 'alt:V Sample Server'
 modules = ['js-module', 'js-bytecode-module']
-resources = ['weapon-addon', 'vehicle-addon', 'chat', 'admin', 'gangwar', 'anims', 'streetnames', 'wasted', 'pickups', 'players-list', 'veh-spawner', 'speedometer', 'hitmarker']
+resources = ['weapon-addon', 'vehicle-addon', 'chat', 'admin', 'gangwar', 'anims', 'streetnames', 'wasted', 'pickups', 'players-list', 'veh-spawner', 'speedometer', 'hitmarker', 'weapons-shop']
 
 # Define the map bound size
-mapBoundsMinX = -10000
-mapBoundsMinY = -10000
-mapBoundsMaxX = 65536
-mapBoundsMaxY = 65536
-mapCellAreaSize = 100 #smaller areas uses more ram and less cpu
+#mapBoundsMinX = -10000
+#mapBoundsMinY = -10000
+#mapBoundsMaxX = 65536
+#mapBoundsMaxY = 65536
+#mapCellAreaSize = 100 #smaller areas uses more ram and less cpu
 
-[voice]
-streamingTickRate = 10
+#[voice]
+#streamingTickRate = 10
 # The bitrate of the voice server
-bitrate = 64000
+#bitrate = 64000
 # The secret for the external server (only needed when using externalHost)
 # The secret must consist of numeric values only
-externalSecret = 1234567890
+#externalSecret = 1234567890
 # The external host address (leave 127.0.0.1, if voice-server is on same machine)
-externalHost = "127.0.0.1"
+#externalHost = "127.0.0.1"
 # The external host port
-externalPort = 7798
+#externalPort = 7798
 # The external host public address (should be the ip address of your server, not localhost!)
-externalPublicHost = "178.20.46.43"
+#externalPublicHost = "178.20.46.43"
 # The external host public port
-externalPublicPort = 7799
+#externalPublicPort = 7799

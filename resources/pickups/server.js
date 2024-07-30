@@ -3,18 +3,20 @@ import * as alt from "alt-server";
 class Pickups {
     static _pickups = {};
     
-    static create(name, model, position, dimension = 0, respawn = false, respawnTime = 30000, pickupSound = "Deliver_Pick_Up", pickupSoundSet = "HUD_FRONTEND_MP_COLLECTABLE_SOUNDS") {
+    static create(player, name, model, position, dimension = 0, respawn = false, respawnTime = 30000, pickupSound = "Deliver_Pick_Up", pickupSoundSet = "HUD_FRONTEND_MP_COLLECTABLE_SOUNDS") {
         if(Pickups._pickups[name]) return;
-        new Pickups(name, model, position, dimension, respawn, respawnTime, pickupSound, pickupSoundSet);
+        new Pickups(player, name, model, position, dimension, respawn, respawnTime, pickupSound, pickupSoundSet);
     }
-    static remove(name) {
+    static remove(player, name) {
         let pickup = Pickups._pickups[name];
         if(!pickup) return;
         pickup.removeColshapes();
         if(pickup._respawnTimeout) alt.clearTimeout(pickup._respawnTimeout);
 
+        
         delete Pickups._pickups[name];
-        alt.emitClient(null, "pickups:remove", name);
+        alt.emitClient(player, "pickups:remove", name);
+        alt.log('removed pickup from server');
     }
     static handleEnterColshape(colshape, entity) {
         if(!entity instanceof alt.Player) return;
@@ -22,12 +24,13 @@ class Pickups {
         if(colshape.isPickupColshape) colshape.ownerPickup.onPickup(entity);
     }
     static handlePlayerConnect(player) {
+        alt.log("Pickups: "+ Pickups._pickups);
         for(const name in Pickups._pickups) {
             Pickups._pickups[name].createForPlayer(player);
         }
     }
 
-    constructor(name, model, position, dimension, respawn, respawnTime, pickupSound, pickupSoundSet) {
+    constructor(player, name, model, position, dimension, respawn, respawnTime, pickupSound, pickupSoundSet) {
         this._name = name;
         this._model = model;
         this._position = position;
@@ -42,7 +45,7 @@ class Pickups {
 
         Pickups._pickups[name] = this;
         this.createColshapes();
-        this.createForPlayer(null);
+        this.createForPlayer(player);
     }
     createColshapes() {
         this._pickupColshape = new alt.ColshapeCylinder(this.position.x, this.position.y, this.position.z, 1.5, 1.5);
@@ -56,16 +59,17 @@ class Pickups {
         if(player.dimension !== this.dimension) return;
         if(this._disabled) return;
         this._disabled = true;
-        this.removeForPlayer(null);
+        this.removeForPlayer(player);
         alt.emitClient(player, "pickups:pickup", this.pickupSound.name, this.pickupSound.set);
-        alt.emit("pickups:pickedUp", player, this.name);
+        //alt.emit("pickups:pickedUp", player, this.name);
         if(this.respawn) this._respawnTimeout = alt.setTimeout(() => {
             this._disabled = false;
-            this.createForPlayer(null);
+            this.createForPlayer(player);
         }, this.respawnTime);
-        else Pickups.remove(this.name);
+        else Pickups.remove(player, this.name);
     }
     createForPlayer(player) {
+        alt.log('createForPlayer '+player);
         alt.emitClient(player, "pickups:create", this.name, this.model, this.position);
     }
     removeForPlayer(player) {
@@ -96,10 +100,18 @@ class Pickups {
 }
 
 alt.on("entityEnterColshape", Pickups.handleEnterColshape);
-alt.on("playerConnect", Pickups.handlePlayerConnect);
+alt.on("spawnPickups", (player)=> {
+    alt.log('here '+player.pos);
+    Pickups.create(player,"kalash", alt.hash("w_ar_assaultrifle"), player.pos);
+    //Pickups.create(player,"granata", "WEAPON_GRENADE", player.pos.sub(3,0,0));
+    alt.log('spawnPickups caught in Pickups');
+    //Pickups.handlePlayerConnect(player);
+}
+);
 
-alt.on("pickups:create", Pickups.create);
-alt.on("pickups:remove", Pickups.remove);
+
+//alt.on("pickups:create", Pickups.create);
+//alt.on("pickups:remove", Pickups.remove);
 alt.on("pickups:setStreamRange", (range) => {
     STREAM_RANGE = range;
 });

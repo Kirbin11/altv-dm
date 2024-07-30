@@ -1,16 +1,16 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-const scale = 0.35;
+const scale = 0.45;
 const fontType = 4;
-const r = 255;
-const g = 0;
-const b = 0;
+const r = 158;
+const g = 157;
+const b = 155;
 const alpha = 255;
 const useOutline = true;
 const useDropShadow = false;
 const zOffsetPerTick = 0.005;
-const deleteAfterInSec = 3;
+const deleteAfterInSec = 1;
 const audioVolume = 1; // 0 - 1
 
 const output = new alt.AudioOutputFrontend();
@@ -25,7 +25,6 @@ function getRandomBoolean() {
     return Math.random() < 0.5;
 }
 
-alt.log('hitmarker loaded client');
 
 function generateRandomValue() {
     let randomNumber = getRandomNumber(0, 4);
@@ -46,9 +45,9 @@ function AddHitmarker(damage, position) {
 
     hitmarkerSet.add({
         damage: damage,
-        x: position.x + xOffset,
-        y: position.y + yOffset,
-        z: position.z + zOffset,
+        x: position.x,// + xOffset,
+        y: position.y, //+ yOffset,
+        z: position.z,// + zOffset,
         CreatedAt: Date.now(),
     });
     if (audio.playing) {

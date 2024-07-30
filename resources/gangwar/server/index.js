@@ -15,11 +15,11 @@ function addToBlacklist(info) {
   fs.writeFileSync(__dirname + "/blacklist.json", JSON.stringify(blacklistData, null, 4));
 }
 
-const vehicles = {
-  ballas: ["karby"],
-  families: ["faction2", "blade", "gauntlet", "impaler"],
-  vagos: ["ellie", "chino", "dukes", "impaler"],
-};
+// const vehicles = {
+//   ballas: ["karby"],
+//   families: ["faction2", "blade", "gauntlet", "impaler"],
+//   vagos: ["ellie", "chino", "dukes", "impaler"],
+// };
 
 const weapons = {
   WEAPON_INFINITYBLADE: "Infinity Blade",
@@ -56,13 +56,13 @@ for (let w in weapons) {
   weaponHashes[alt.hash(w)] = weapons[w];
 }
 
-const availableWeapons = ["WEAPON_INFINITYBLADE", "WEAPON_KNIFE", "WEAPON_BAT", "WEAPON_BOTTLE", "WEAPON_WRENCH", "WEAPON_PISTOL", "WEAPON_HEAVYPISTOL", "WEAPON_REVOLVER", "WEAPON_MICROSMG", "WEAPON_SMG", "WEAPON_COMBATPDW", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_PUMPSHOTGUN"];
+// const availableWeapons = ["WEAPON_INFINITYBLADE", "WEAPON_KNIFE", "WEAPON_BAT", "WEAPON_BOTTLE", "WEAPON_WRENCH", "WEAPON_PISTOL", "WEAPON_HEAVYPISTOL", "WEAPON_REVOLVER", "WEAPON_MICROSMG", "WEAPON_SMG", "WEAPON_COMBATPDW", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_PUMPSHOTGUN"];
 
-function giveWeapons(player) {
-  for (const weapon of availableWeapons) {
-    player.giveWeapon(alt.hash(weapon), 9999, true);
-  }
-}
+// function giveWeapons(player) {
+//   for (const weapon of availableWeapons) {
+//     player.giveWeapon(alt.hash(weapon), 9999, true);
+//   }
+// }
 
 const colors = {
   ballas: {
@@ -397,6 +397,8 @@ alt.onClient("teamSelected", (player, teamId) => {
   alt.emitClient(player, "applyAppearance", team);
   alt.emitClient(player, "updateTeam", team);
 
+  alt.emit('spawnPickups', player);
+  alt.log('sent spawnPickups');
   if (currentTurf != null) {
     alt.emitAllClients("captureStateChanged", true);
     alt.emitAllClients("startCapture", {
@@ -415,25 +417,27 @@ alt.onClient("action", (player) => {
     const nextTimeSpawn = player.getMeta("canSpawnVehicle");
     if (nextTimeSpawn > Date.now()) return;
 
-    const pTeam = player.getMeta("team");
-    const pos = player.pos;
-    let curVeh = player.getMeta("vehicle");
-    if (curVeh) {
-      curVeh.destroy();
-      curVeh = null;
-    }
+    alt.emitClient(player, 'chooseVehicle');
+    // const pTeam = player.getMeta("team");
+    // const pos = player.pos;
+    // let curVeh = player.getMeta("vehicle");
+    // if (curVeh) {
+    //   curVeh.destroy();
+    //   curVeh = null;
+    // }
 
-    const nextModel = vehicles[pTeam][Math.round(Math.random() * (vehicles[pTeam].length - 1))];
-    const vehColor = colors[pTeam].rgba;
-    curVeh = new alt.Vehicle(nextModel, pos.x + 2, pos.y, pos.z, 0, 0, 0);
-    curVeh.customPrimaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
-    curVeh.customSecondaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
-    alt.emitAllClients('vehicleSpawned2', curVeh);
+    // const nextModel = vehicles[pTeam][Math.round(Math.random() * (vehicles[pTeam].length - 1))];
+    // const vehColor = colors[pTeam].rgba;
+    // curVeh = new alt.Vehicle(nextModel, pos.x + 2, pos.y, pos.z, 0, 0, 0);
+    // curVeh.customPrimaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
+    // curVeh.customSecondaryColor = { r: vehColor.r, g: vehColor.g, b: vehColor.b };
+    //alt.emitAllClients('vehicleSpawned2', curVeh);
     
-    player.setMeta("vehicle", curVeh);
-    player.setMeta("canSpawnVehicle", Date.now() + 400);
+    //player.setMeta("vehicle", curVeh);
+    //player.setMeta("canSpawnVehicle", Date.now() + 400);
   } else if (cp == 2) {
-    giveWeapons(player);
+    alt.emitClient(player, 'chooseWeapons');
+    //giveWeapons(player);
   }
 });
 
@@ -466,9 +470,16 @@ alt.on("playerDeath", (player, killer, weapon) => {
   const team = player.getMeta("team");
   if (!killer) killer = player;
 
-  const nextSpawns = positions[team].spawns;
+  alt.setTimeout(() => {
+    const nextSpawns = positions[team].spawns;
   const spawnPos = nextSpawns[Math.round(Math.random() * (nextSpawns.length - 1))];
+
+  
   player.spawn(spawnPos.x, spawnPos.y, spawnPos.z, 5000);
+}, 3000);
+
+
+
 
   if (killer) {
     const killerTeam = killer.getMeta("team");

@@ -2,10 +2,10 @@ import * as alt from 'alt-server';
 
 const options = {
   'Kick': {
-    execute: (player) => alt.log("tried kicking player")
+    execute: (player) => alt.log("tried kicking player "+player)
   },
   'Kill': {
-    execute: (player) => player.health = 1
+    execute: (player) => alt.log("tried killing player "+player) //player.health = 1
   }
 };
 

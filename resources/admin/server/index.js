@@ -165,12 +165,12 @@ function SendNotificationToAllPlayer(message, textColor = 0, bgColor = 2, blink 
 alt.on("playerDisconnect", (player, reason) => {
   const playerCount = alt.Player.all.length;
   chat.broadcast(`{1cacd4}${player.name} {ffffff}has {ff0000}left {ffffff}the Server.. (${playerCount} players online)`);
-  player.getMeta("vehicles").forEach((vehicle) => {
-    if (vehicle != null) {
-      vehicle.destroy();
-    }
-  });
-  player.setMeta("vehicles", undefined);
+  // player.getMeta("vehicles").forEach((vehicle) => {
+  //   if (vehicle != null) {
+  //     vehicle.destroy();
+  //   }
+  // });
+  // player.setMeta("vehicles", undefined);
   alt.log(`${player.name} has leaved the server becauseof ${reason}`);
 });
 

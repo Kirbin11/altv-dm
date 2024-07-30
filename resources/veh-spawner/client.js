@@ -52,11 +52,16 @@ view.on('select', (model) => {
 alt.on('keyup', (key) => {
     if (!loaded) return;
 
-    if (key === 113) {
-        menu(!opened);
-    } else if (opened && key === 0x1B) {
+    //if (key === 113) {
+    //    menu(!opened);
+   // } else 
+   if (opened && key === 0x1B) {
         menu(false);
     }
+});
+
+alt.onServer('chooseVehicle', () => {
+    menu(!opened);
 });
 
 alt.onServer('setPedIntoVehicle', async (vehicle) => {
@@ -65,6 +70,7 @@ alt.onServer('setPedIntoVehicle', async (vehicle) => {
         if (player.vehicle) return true;
         native.setPedIntoVehicle(player.scriptID, vehicle.scriptID, -1);
     });
+    menu(false);
 });
 
 alt.onServer('vehicleSpawned', (vehicle) => {

@@ -8,7 +8,6 @@ let app = new Vue({
     data: {
         categories: [
             'All',
-            'Boats',
             'Commercials',
             'Compacts',
             'Coupes',
@@ -27,8 +26,6 @@ let app = new Vue({
             'Sports',
             'Sports Classic',
             'Super',
-            'Trailers',
-            'Trains',
             'Utility',
             'Vans',
             'Open Wheel'

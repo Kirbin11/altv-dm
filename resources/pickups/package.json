@@ -3,5 +3,30 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "scripts": {
+    "test": "tsc",
+    "preversion": "yarn run test",
+    "release": "yarn version --no-git-tag-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "as"
+  },
+  "keywords": [
+    "altmp",
+    "altv",
+    "node",
+    "node-module",
+    "js-module",
+    "gta",
+    "gta5",
+    "gtav"
+  ],
+  "author": "altMP Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "asd"
+  },
+  "homepage": "asd",
   "type": "module"
 }
