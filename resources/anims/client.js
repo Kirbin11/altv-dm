@@ -55,6 +55,10 @@ menu.ItemSelect.on((item, selectedItemIndex) => {
     }
 });
 
+alt.onServer('playAnimPickup', ()=>{
+	//let SelectedAnimation = AvailableAnimations[selectedItemIndex];
+	playAnimation("random@street_race", "_car_a_flirt_girl", 1, 2000);
+});
 
 DanceMenu.ItemSelect.on((item, selectedItemIndex) => {
 	if (item instanceof NativeUI.UIMenuItem && selectedItemIndex < AvailableDances.length) {

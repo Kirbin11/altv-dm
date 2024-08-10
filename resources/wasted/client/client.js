@@ -8,7 +8,7 @@ const scriptConstants = {
     stopTime: 7500,
     camEffect: 1,
     title: "~r~WASTED",
-    deathMessage: "пизда настала."
+    deathMessage: "Р° С‡Рµ РІ РЅРѕРіР°С… Р»РµР¶РёС€СЊ?"
 };
 
 function ShowWastedScreen(){

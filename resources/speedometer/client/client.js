@@ -29,8 +29,8 @@ alt.on('enteredVehicle', (vehicle, seat) => {
         speedometrObject,
         vehicle,
         native.getEntityBoneIndexByName(vehicle, 'door_pside_f'),
-        0.8,
-        -0.1,
+        0.6,
+        -0.2,
         0.2,
         0,
         0,
@@ -46,30 +46,33 @@ alt.on('enteredVehicle', (vehicle, seat) => {
 
 
     native.setEntityCollision(speedometrObject, false, true);
-    speedometr = new alt.WebView(
-        'http://resource/client/speedometr/index.html',
-        modelHash,
-        speedoTexture
-    );
-
-    intervalSpeed = alt.setInterval(() => {
-        let color;
-        let speed = (native.getEntitySpeed(vehicle.scriptID) * 3.6).toFixed();
-        let maxSpeed = (native.getVehicleEstimatedMaxSpeed(vehicle) * 3.6).toFixed();
-        if (speed > maxSpeed - 30) color = 'red';
-        else if (speed > maxSpeed / 2 - 30) color = 'orange';
-        else color = 'white';
-        let health = native.getVehicleEngineHealth(vehicle);
-        speedometr.emit('cef::speedometer:value', speed, color);
-        speedometr.emit('cef::speedometer:engine', health / 100);
-        speedometr.emit('cef::speedometer:speedo', (vehicle.rpm * 100).toFixed());
-    }, 0);
-
-    let fuel = 100;
-    intervalFuel = alt.setInterval(() => {
-        fuel--;
-        speedometr.emit('cef::speedometer:fuel', fuel);
+    alt.setTimeout(() => {
+        speedometr = new alt.WebView(
+            'http://resource/client/speedometr/index.html',
+            modelHash,
+            speedoTexture
+        );
+        intervalSpeed = alt.setInterval(() => {
+            let color;
+            let speed = (native.getEntitySpeed(vehicle.scriptID) * 3.6).toFixed();
+            let maxSpeed = (native.getVehicleEstimatedMaxSpeed(vehicle) * 3.6).toFixed();
+            if (speed > maxSpeed - 30) color = 'red';
+            else if (speed > maxSpeed / 2 - 30) color = 'orange';
+            else color = 'white';
+            let health = native.getVehicleEngineHealth(vehicle);
+            speedometr.emit('cef::speedometer:value', speed, color);
+            //speedometr.emit('cef::speedometer:engine', health / 100);
+           // speedometr.emit('cef::speedometer:speedo', (vehicle.rpm * 100).toFixed());
+        }, 0);
+    
+        // let fuel = 100;
+        // intervalFuel = alt.setInterval(() => {
+        //     fuel--;
+        //     speedometr.emit('cef::speedometer:fuel', fuel);
+        // }, 500);
     }, 500);
+
+    
 });
 
 alt.on('leftVehicle', (vehicle, seat) => {

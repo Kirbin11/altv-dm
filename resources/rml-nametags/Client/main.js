@@ -3,7 +3,7 @@ import * as native from "natives";
 
 // ---------------- Config ----------------
 
-const showVehicleIds = true;
+const showVehicleIds = false;
 const showPlayerIds = true;
 const showPlayerNames = true;
 const checkLoS = true;
@@ -20,19 +20,40 @@ alt.loadRmlFont("/Client/arialbd.ttf", "arial", false, true);
 const document = new alt.RmlDocument("/Client/index.rml");
 const container = document.getElementByID("nametag-container");
 const nameTags = new Map();
+const textTags = new Map();
 let tickHandle = undefined;
+let test = undefined;
+
+alt.on('drawCheckpointText', (checkpoint, text) => {
+    const rmlElement = document.createElement("button");
+    //rmlElement.entityType = entity.type;
+   // rmlElement.entityID = entity.remoteID;
+    rmlElement.addClass("nametag");
+    rmlElement.addClass("hide");
+
+    rmlElement.innerRML = text;
+
+    textTags.set(checkpoint, rmlElement);
+    container.appendChild(rmlElement);
+    rmlElement.on("click", printCoordinates);
+    test = checkpoint;
+
+    if (tickHandle !== undefined) return;
+    tickHandle = alt.everyTick(drawTexts);
+});
 
 alt.on("gameEntityCreate", (entity) => {
     const rmlElement = document.createElement("button");
-    rmlElement.id = entity.id.toString();
+    rmlElement.entityType = entity.type;
+    rmlElement.entityID = entity.remoteID;
     rmlElement.addClass("nametag");
     rmlElement.addClass("hide");
 
     if (entity instanceof alt.Player) {
         if (showPlayerIds && !showPlayerNames)
-            rmlElement.innerRML = `ID: ${entity.id}`;
+            rmlElement.innerRML = `ID: ${entity.remoteID}`;
         else if (showPlayerIds && showPlayerNames)
-            rmlElement.innerRML = `ID: ${entity.id} | Name: ${entity.name}`;
+            rmlElement.innerRML = `ID: ${entity.remoteID} | Name: ${entity.name}`;
         else if (!showPlayerIds && showPlayerNames)
             rmlElement.innerRML = `Name: ${entity.name}`;
         else {
@@ -40,7 +61,7 @@ alt.on("gameEntityCreate", (entity) => {
             return;
         }
     } else if (entity instanceof alt.Vehicle && showVehicleIds)
-        rmlElement.innerRML = `ID: ${entity.id}`;
+        rmlElement.innerRML = `ID: ${entity.remoteID}`;
     else {
         rmlElement.destroy();
         return;
@@ -81,8 +102,24 @@ alt.on("keyup", (key) => {
     }
 });
 
+alt.on("keyup", (key) => {
+    if (key !== 46) return;
+
+    var checkpoint = test;
+   var asd = native.startExpensiveSynchronousShapeTestLosProbe(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z, 
+    checkpoint.pos.x, checkpoint.pos.y, checkpoint.pos.z,
+     -1, alt.Player.local, 7);
+     alt.log(checkpoint.pos);
+     alt.log(alt.Player.local.pos);
+     alt.log(asd);
+     var dsa = native.getShapeTestResultIncludingMaterial(asd);
+     alt.log(dsa);
+     alt.log(dsa[0]);
+     alt.log(dsa[1]);
+});
+
 function printCoordinates(rmlElement, eventArgs) {
-    const entity = alt.Entity.getByID(parseInt(rmlElement.id));
+    const entity = alt.BaseObject.getByRemoteID(rmlElement.entityType, rmlElement.entityID);
     alt.log("Entity Position", "X", entity.pos.x, "Y", entity.pos.y, "Z", entity.pos.z);
 }
 
@@ -108,6 +145,36 @@ function drawMarkers() {
             if (!dynamicSize) return;
             const fontSizeModificator = Math.min(entity.pos.distanceTo(alt.Player.local.pos) / 100, 1);
             const fontSize = (1 - fontSizeModificator) * 50;
+            rmlElement.style["font-size"] = `${fontSize}dp`;
+        }
+    });
+}
+
+
+function drawTexts() {
+    textTags.forEach((rmlElement, checkpoint) => {
+        const {x, y, z} = checkpoint.pos;
+
+         if (!native.isSphereVisible(x, y, z, 0.0099999998)|| (checkLoS && !native.startExpensiveSynchronousShapeTestLosProbe(checkpoint.pos.x, 
+            checkpoint.pos.y, checkpoint.pos.z, alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z,
+             0, alt.Player.local, 7))) {
+             if (!rmlElement.shown) return;
+
+             rmlElement.addClass("hide");
+             rmlElement.shown = false;
+         } else {
+            if (!rmlElement.shown) {
+                rmlElement.removeClass("hide");
+                rmlElement.shown = true;
+            }
+
+            const {x: screenX, y: screenY} = alt.worldToScreen(x, y, z + 2);
+            rmlElement.style["left"] = `${screenX}px`;
+            rmlElement.style["top"] = `${screenY}px`;
+
+            if (!dynamicSize) return;
+            const fontSizeModificator = Math.min(checkpoint.pos.distanceTo(alt.Player.local.pos) / 100, 1);
+            const fontSize = (1 - fontSizeModificator) * 10;
             rmlElement.style["font-size"] = `${fontSize}dp`;
         }
     });

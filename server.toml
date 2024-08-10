@@ -11,7 +11,9 @@ website = 'example.com'
 language = 'en'
 description = 'alt:V Sample Server'
 modules = ['js-module', 'js-bytecode-module']
-resources = ['weapon-addon', 'vehicle-addon', 'chat', 'admin', 'gangwar', 'anims', 'streetnames', 'wasted', 'pickups', 'players-list', 'veh-spawner', 'speedometer', 'hitmarker', 'weapons-shop', 'noclip']
+resources = ['weapon-addon', 'vehicle-addon', 'chat', 'admin', 'gangwar', 'anims', 
+'mini-info', 'wasted', 'pickups', 'players-list', 'veh-shop', 'speedometer', 
+'hitmarker', 'weapons-shop', 'noclip', '247-shop']
 
 # Define the map bound size
 #mapBoundsMinX = -10000

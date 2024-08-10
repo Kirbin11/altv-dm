@@ -4,10 +4,13 @@ let pickups = {};
 const STREAM_RANGE = 200;
 const OBJECTS = {};
 let LAST_POS = null;
+let checkpoints = {};
 function createObject(name, model, pos){
-    pickups[name] = native.createObject(model, 102, -1949, 21, false, false, false);//.x, pos.y, pos.z, false, false, false);
+    pickups[name] = native.createObject(alt.hash(model), pos.x, pos.y, pos.z, false, false, false);
     native.freezeEntityPosition(pickups[name], true);
     native.setEntityCollision(pickups[name], false, false);
+    const pos1 = new alt.Vector3(pos.x, pos.y, pos.z-1);
+    checkpoints[name] = new alt.Checkpoint(47, pos1, pos1, 0.5, 2, alt.RGBA.green, alt.RGBA.green, STREAM_RANGE);
 };
 
 alt.on('resourceStop',()=>{
@@ -59,6 +62,8 @@ alt.onServer("pickups:remove", (name) => {
     if(pickup) {
         native.deleteObject(pickup);
         delete pickups[name];
+        checkpoints[name].destroy();
+        delete checkpoints[name];
     }
 });
 

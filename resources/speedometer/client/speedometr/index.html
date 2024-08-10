@@ -10,7 +10,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                font-size: 90px;
+                font-size: 60px;
                 color: rgb(255, 153, 0);
                 overflow: hidden;
             }
@@ -168,7 +168,7 @@
     <body>
         <div id="speedometer" class="speed">100</div>
         <div class="container_box">
-            <div class="container">
+            <!-- <div class="container">
                 <div class="card">
                     <div class="box">
                         <div class="percent">
@@ -182,8 +182,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container">
+            </div> -->
+            <!-- <div class="container">
                 <div class="card">
                     <div class="box">
                         <div class="percent">
@@ -197,8 +197,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-          <div class="container">
+            </div> -->
+          <!-- <div class="container">
                 <div class="card">
                     <div class="box">
                         <div class="percent">
@@ -212,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
            
         </div>
@@ -224,47 +224,47 @@
             alt.on('cef::speedometer:value', (value, color) => {
                         let gets = document.getElementById('speedometer');
                 gets.style.color = color;
-                gets.innerHTML = `${value} km/h`;
+                gets.innerHTML = `${value} км/ч`;
             });
 
-            alt.on('cef::speedometer:fuel', value => {
+            // alt.on('cef::speedometer:fuel', value => {
             
-                let element = document.getElementById('fuel');
-                let color;
-                if (value <= 1) return;
-                if (value < 20) color = '#FF0000';
-                else if (value < 40) color = '#FFFF00';
-                else color = '#00ff43';
+            //     let element = document.getElementById('fuel');
+            //     let color;
+            //     if (value <= 1) return;
+            //     if (value < 20) color = '#FF0000';
+            //     else if (value < 40) color = '#FFFF00';
+            //     else color = '#00ff43';
             
-                element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
-                element.style.stroke = `${color}`;
-            });
+            //     element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
+            //     element.style.stroke = `${color}`;
+            // });
 
-            alt.on('cef::speedometer:engine', value => {
+            // alt.on('cef::speedometer:engine', value => {
            
-                let element = document.getElementById('engine');
-                let color;
-                if (value <= 1) return;
-                if (value < 20) color = '#FF0000';
-                else if (value < 40) color = '#FFFF00';
-                else color = '#00ff43';
+            //     let element = document.getElementById('engine');
+            //     let color;
+            //     if (value <= 1) return;
+            //     if (value < 20) color = '#FF0000';
+            //     else if (value < 40) color = '#FFFF00';
+            //     else color = '#00ff43';
             
-                element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
-                element.style.stroke = `${color}`;
-            });
+            //     element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
+            //     element.style.stroke = `${color}`;
+            // });
 
-            alt.on('cef::speedometer:speedo', value => {
+            // alt.on('cef::speedometer:speedo', value => {
             
-                let element = document.getElementById('speedo');
-                let color;
-                if (value <= 1) return;
-                if (value < 20) color = '#FF0000';
-                else if (value < 40) color = '#FFFF00';
-                else color = '#00ff43';
+            //     let element = document.getElementById('speedo');
+            //     let color;
+            //     if (value <= 1) return;
+            //     if (value < 20) color = '#FF0000';
+            //     else if (value < 40) color = '#FFFF00';
+            //     else color = '#00ff43';
             
-                element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
-                element.style.stroke = `${color}`;
-            });
+            //     element.style.strokeDashoffset = `calc(440 - (440 * ${value}) / 100)`;
+            //     element.style.stroke = `${color}`;
+            // });
         }
     </script>
 </html>

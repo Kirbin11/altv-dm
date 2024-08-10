@@ -3,6 +3,8 @@ import * as game from "natives";
 import * as chat from "chat";
 
 let myTeam = null;
+let inZZ = null;
+let flag = false;
 
 const clothes = {
   families: {
@@ -97,41 +99,61 @@ const clothes = {
   },
 };
 
+alt.everyTick(() => {
+  game.disableControlAction(0,36,true);
+});
+
 const positions = {
   vagos: {
     spawns: [
-      { x: 334.6681, y: -2052.6726, z: 20.8212 },
-      { x: 341.789, y: -2051.3669, z: 21.3267 },
-      { x: 345.7582, y: -2044.6812, z: 21.63 },
-      { x: 342.3955, y: -2040.356, z: 21.5626 },
-      { x: 351.2835, y: -2043.2043, z: 22.0007 },
+      { x: 348.5, y: -2052.6, z: 20.6 },
+      { x: 335.6, y: -2053.5, z: 19.8 },
+      { x: 353, y: -2050.9, z: 20.8 }
     ],
-    weapon: { x: 359.5912, y: -2060.611, z: 21.4952 },
-    vehicle: { x: 330.9758, y: -2036.6241, z: 20.9897 },
+    weapon: { x: 352.6, y: -2036.4, z: 21.3 },
+    vehicle: { x: 332.7, y: -2037.4, z: 20 },
+    shop247: { x: 316.7, y: -2015.2, z: 19.6 },
+    zz: { x1: 312.9, y1: -1998.1,
+      x2: 290.6, y2: -2024.2,
+      x3: 359.2, y3: -2089.2,
+      x4: 389.5, y4: -2053.3,
+      zMin: 19, zMax: 29, zMid:21
+     }
   },
   ballas: {
     spawns: [
-      { x: 88.6285, y: -1959.389, z: 20.737 },
-      { x: 109.3054, y: -1955.8022, z: 20.737 },
-      { x: 117.7318, y: -1947.7583, z: 20.72 },
-      { x: 118.9186, y: -1934.2681, z: 20.7707 },
-      { x: 105.7318, y: -1923.4154, z: 20.737 },
+      { x: -71.4, y: -1833.1, z: 25.9 },
+      { x: -74.5, y: -1840.4, z: 25.9 },
+      { x: -65, y: -1822.9, z: 25.9 }
     ],
-    weapon: { x: 97, y: -1951, z: 20 },
-    vehicle: { x: 111, y: -1945, z: 20 },
+    weapon: { x: -72.5, y: -1821.6, z: 25.9 },
+    vehicle: { x: -49.9, y: -1845.8, z: 25.2 },
+    shop247: { x: -73, y: -1835.4, z: 25.9 },
+    zz: { x1: -33, y1: -1837.4,
+      x2: -65.9, y2: -1809.2,
+      x3: -86.1, y3: -1834.9,
+      x4: -52, y4: -1862.9,
+      zMin: 24, zMax: 34, zMid:26
+     }
   },
   families: {
     spawns: [
-      { x: -196.4439, y: -1607.0505, z: 34.1494 },
-      { x: -174.356, y: -1609.978, z: 33.7281 },
-      { x: -175.0681, y: -1623.1647, z: 33.5596 },
-      { x: -191.1692, y: -1641.4813, z: 33.408 },
-      { x: -183.5736, y: -1587.5999, z: 34.8234 },
+      { x: -216, y: -1499.7, z: 30.1 },
+      { x: -223, y: -1515.2, z: 30.5 },
+      { x: -205, y: -1498.2, z: 30.5 }
     ],
-    weapon: { x: -210.7648, y: -1606.8132, z: 34.8571 },
-    vehicle: { x: -183.5736, y: -1587.5999, z: 34.8234 },
+    weapon: { x: -233, y: -1490.5, z: 32 },
+    vehicle: { x: -223.1, y: -1489.7, z: 30.2 },
+    shop247: { x: -239.3, y: -1470.2, z: 30.5 },
+    zz: { x1: -194.4, y1: -1488.5,
+      x2: -233, y2: -1458.7,
+      x3: -259.6, y3: -1500,
+      x4: -229.3, y4: -1528.6,
+      zMin: 29, zMax: 39, zMid:31
+     }
   },
 };
+
 
 let leadingTeam = null;
 let lastLeadingTeam = null;
@@ -160,7 +182,6 @@ let viewLoaded = false;
 function loadWebView() {
   mainView = new alt.WebView("http://resource/client/html/index.html");
   mainView.on("viewLoaded", () => {
-    alt.log("GangWar view loaded");
     alt.emitServer("viewLoaded");
     viewLoaded = true;
   });
@@ -173,7 +194,7 @@ function loadWebView() {
 }
 
 alt.on("connectionComplete", () => {
-  loadIpls();
+  //loadIpls();
   alt.emitServer("authData", {
     discord: alt.Discord.currentUser,
     sc: alt.getLicenseHash(),
@@ -184,6 +205,13 @@ alt.onServer("youAreConnected", () => {
   chat.pushLine("Loading...");
   loadWebView();
 });
+// let vagosBlip = new alt.PointBlip(positions.vagos.zz.x, positions.vagos.zz.y, positions.vagos.zz.z);
+// vagosBlip.sprite = 543;
+// vagosBlip.name = "Vagos";
+// vagosBlip.alpha = 200;
+// vagosBlip.shortRange = false;
+// vagosBlip.color = 5;
+
 
 let weaponBlip = null;
 let vehicleBlip = null;
@@ -244,12 +272,18 @@ alt.onServer("applyAppearance", (team) => {
 function loadCheckpoints() {
   const pos = new alt.Vector3(positions[myTeam].vehicle.x, positions[myTeam].vehicle.y, positions[myTeam].vehicle.z);
 const pos2 = new alt.Vector3(positions[myTeam].weapon.x, positions[myTeam].weapon.y, positions[myTeam].weapon.z);
+const pos3 = new alt.Vector3(positions[myTeam].shop247.x, positions[myTeam].shop247.y, positions[myTeam].shop247.z);
 
-new alt.Checkpoint(47, pos, pos, 1, 1, alt.RGBA.blue, alt.RGBA.green, 100);
-new alt.Checkpoint(47, pos2, pos2, 0.5, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+//const pos4 = new alt.Vector3(positions[myTeam].zz.x, positions[myTeam].zz.y, positions[myTeam].zz.z);
 
-const labelVehPos = pos;
-const labelWeapPos = pos2;
+var vehCheck = new alt.Checkpoint(47, pos, pos, 1, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+var weapCheck = new alt.Checkpoint(47, pos2, pos2, 0.5, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+var shopCheck = new alt.Checkpoint(47, pos3, pos3, 0.5, 1, alt.RGBA.blue, alt.RGBA.green, 100);
+//new alt.Checkpoint(47, pos4, pos4, 20, 1, alt.RGBA.green, alt.RGBA.green, 100);
+
+const labelVehPos = pos.add(0,0,1);
+const labelWeapPos = pos2.add(0,0,1);
+const label247Pos = pos3.add(0,0,1);
 const labelRot = new alt.Vector3(0, 0, -0.253);
 const labelColor = new alt.RGBA(255, 255, 255, 255);
 const labelOutlineColor = new alt.RGBA(0, 0, 0, 80);
@@ -257,10 +291,17 @@ const labelFontSize = 32;
 const labelFontScale = 2;
 const labelOutlineWidth = .25;
 
-new alt.TextLabel('Взять тачку', 'Segoe UI', labelFontSize, labelFontScale, labelVehPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
-new alt.TextLabel('Взять ганы', 'Segoe UI', labelFontSize, labelFontScale, labelWeapPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+// alt.emit('drawCheckpointText', vehCheck, 'Магащин авто');
+// alt.emit('drawCheckpointText', weapCheck, 'Мазагин оружия');
+// alt.emit('drawCheckpointText', shopCheck, 'Мачагин 247');
 
+
+// new alt.TextLabel('Взять тачку', 'Segoe UI', labelFontSize, labelFontScale, labelVehPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+// new alt.TextLabel('Взять ганы', 'Segoe UI', labelFontSize, labelFontScale, labelWeapPos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+// new alt.TextLabel('Магазин 24/7', 'Segoe UI', labelFontSize, labelFontScale, label247Pos, labelRot, labelColor, labelOutlineWidth, labelOutlineColor);
+drawZZ();
 }
+
 
 alt.onServer("updateTeamPoints", (info) => {
   let myTeamPoints = info[myTeam];
@@ -381,135 +422,174 @@ alt.onServer("updatePlayersOnline", (players) => {
 });
 
 alt.onServer('vehicleSpawned2', (vehicle) => {
-  alt.log('setting off 2.');
-  alt.log(vehicle);
-  alt.log(alt.Player.local);
   game.setEntityNoCollisionEntity(alt.Player.local, vehicle, false);
 });
 
+alt.onServer('exitedGreenZone', () => {
+  game.setEntityInvincible(alt.Player.local.scriptID, false);
+  alt.emit('freeroam:sendNotification', 'CHAR_AMMUNATION', 'Admin', 'Слушай сюда', 'Exited Green Zone');
+  alt.clearEveryTick(inZZ);
+});
 
-function loadIpls() {
-  alt.requestIpl("chop_props");
-  alt.requestIpl("FIBlobby");
-  alt.removeIpl("FIBlobbyfake");
-  alt.requestIpl("FBI_colPLUG");
-  alt.requestIpl("FBI_repair");
-  alt.requestIpl("v_tunnel_hole");
-  alt.requestIpl("TrevorsMP");
-  alt.requestIpl("TrevorsTrailer");
-  alt.requestIpl("TrevorsTrailerTidy");
-  alt.removeIpl("farm_burnt");
-  alt.removeIpl("farm_burnt_lod");
-  alt.removeIpl("farm_burnt_props");
-  alt.removeIpl("farmint_cap");
-  alt.removeIpl("farmint_cap_lod");
-  alt.requestIpl("farm");
-  alt.requestIpl("farmint");
-  alt.requestIpl("farm_lod");
-  alt.requestIpl("farm_props");
-  alt.requestIpl("facelobby");
-  alt.removeIpl("CS1_02_cf_offmission");
-  alt.requestIpl("CS1_02_cf_onmission1");
-  alt.requestIpl("CS1_02_cf_onmission2");
-  alt.requestIpl("CS1_02_cf_onmission3");
-  alt.requestIpl("CS1_02_cf_onmission4");
-  alt.requestIpl("v_rockclub");
-  alt.requestIpl("v_janitor");
-  alt.removeIpl("hei_bi_hw1_13_door");
-  alt.requestIpl("bkr_bi_hw1_13_int");
-  alt.requestIpl("ufo");
-  alt.requestIpl("ufo_lod");
-  alt.requestIpl("ufo_eye");
-  alt.removeIpl("v_carshowroom");
-  alt.removeIpl("shutter_open");
-  alt.removeIpl("shutter_closed");
-  alt.removeIpl("shr_int");
-  alt.requestIpl("csr_afterMission");
-  alt.requestIpl("v_carshowroom");
-  alt.requestIpl("shr_int");
-  alt.requestIpl("shutter_closed");
-  alt.requestIpl("smboat");
-  alt.requestIpl("smboat_distantlights");
-  alt.requestIpl("smboat_lod");
-  alt.requestIpl("smboat_lodlights");
-  alt.requestIpl("cargoship");
-  alt.requestIpl("railing_start");
-  alt.removeIpl("sp1_10_fake_interior");
-  alt.removeIpl("sp1_10_fake_interior_lod");
-  alt.requestIpl("sp1_10_real_interior");
-  alt.requestIpl("sp1_10_real_interior_lod");
-  alt.removeIpl("id2_14_during_door");
-  alt.removeIpl("id2_14_during1");
-  alt.removeIpl("id2_14_during2");
-  alt.removeIpl("id2_14_on_fire");
-  alt.removeIpl("id2_14_post_no_int");
-  alt.removeIpl("id2_14_pre_no_int");
-  alt.removeIpl("id2_14_during_door");
-  alt.requestIpl("id2_14_during1");
-  alt.removeIpl("Coroner_Int_off");
-  alt.requestIpl("coronertrash");
-  alt.requestIpl("Coroner_Int_on");
-  alt.removeIpl("bh1_16_refurb");
-  alt.removeIpl("jewel2fake");
-  alt.removeIpl("bh1_16_doors_shut");
-  alt.requestIpl("refit_unload");
-  alt.requestIpl("post_hiest_unload");
-  alt.requestIpl("Carwash_with_spinners");
-  alt.requestIpl("KT_CarWash");
-  alt.requestIpl("ferris_finale_Anim");
-  alt.removeIpl("ch1_02_closed");
-  alt.requestIpl("ch1_02_open");
-  alt.requestIpl("AP1_04_TriAf01");
-  alt.requestIpl("CS2_06_TriAf02");
-  alt.requestIpl("CS4_04_TriAf03");
-  alt.removeIpl("scafstartimap");
-  alt.requestIpl("scafendimap");
-  alt.removeIpl("DT1_05_HC_REMOVE");
-  alt.requestIpl("DT1_05_HC_REQ");
-  alt.requestIpl("DT1_05_REQUEST");
-  alt.requestIpl("FINBANK");
-  alt.removeIpl("DT1_03_Shutter");
-  alt.removeIpl("DT1_03_Gr_Closed");
-  alt.requestIpl("golfflags");
-  alt.requestIpl("airfield");
-  alt.requestIpl("v_garages");
-  alt.requestIpl("v_foundry");
-  alt.requestIpl("hei_yacht_heist");
-  alt.requestIpl("hei_yacht_heist_Bar");
-  alt.requestIpl("hei_yacht_heist_Bedrm");
-  alt.requestIpl("hei_yacht_heist_Bridge");
-  alt.requestIpl("hei_yacht_heist_DistantLights");
-  alt.requestIpl("hei_yacht_heist_enginrm");
-  alt.requestIpl("hei_yacht_heist_LODLights");
-  alt.requestIpl("hei_yacht_heist_Lounge");
-  alt.requestIpl("hei_carrier");
-  alt.requestIpl("hei_Carrier_int1");
-  alt.requestIpl("hei_Carrier_int2");
-  alt.requestIpl("hei_Carrier_int3");
-  alt.requestIpl("hei_Carrier_int4");
-  alt.requestIpl("hei_Carrier_int5");
-  alt.requestIpl("hei_Carrier_int6");
-  alt.requestIpl("hei_carrier_LODLights");
-  alt.requestIpl("bkr_bi_id1_23_door");
-  alt.requestIpl("lr_cs6_08_grave_closed");
-  alt.requestIpl("hei_sm_16_interior_v_bahama_milo_");
-  alt.requestIpl("CS3_07_MPGates");
-  alt.requestIpl("cs5_4_trains");
-  alt.requestIpl("v_lesters");
-  alt.requestIpl("v_trevors");
-  alt.requestIpl("v_michael");
-  alt.requestIpl("v_comedy");
-  alt.requestIpl("v_cinema");
-  alt.requestIpl("V_Sweat");
-  alt.requestIpl("V_35_Fireman");
-  alt.requestIpl("redCarpet");
-  alt.requestIpl("triathlon2_VBprops");
-  alt.requestIpl("jetstealturnel");
-  alt.requestIpl("Jetsteal_ipl_grp1");
-  alt.requestIpl("v_hospital");
-  alt.removeIpl("RC12B_Default");
-  alt.removeIpl("RC12B_Fixed");
-  alt.requestIpl("RC12B_Destroyed");
-  alt.requestIpl("RC12B_HospitalInterior");
-  alt.requestIpl("canyonriver01");
+alt.onServer('enteredGreenZone', () => {
+  game.setEntityInvincible(alt.Player.local.scriptID, true);
+  alt.emit('freeroam:sendNotification', 'CHAR_AMMUNATION', 'Admin', 'Слушай сюда', 'Entered Green Zone');
+  inZZ = drawLabels();
+});
+// function loadIpls() {
+//   alt.requestIpl("chop_props");
+//   alt.requestIpl("FIBlobby");
+//   alt.removeIpl("FIBlobbyfake");
+//   alt.requestIpl("FBI_colPLUG");
+//   alt.requestIpl("FBI_repair");
+//   alt.requestIpl("v_tunnel_hole");
+//   alt.requestIpl("TrevorsMP");
+//   alt.requestIpl("TrevorsTrailer");
+//   alt.requestIpl("TrevorsTrailerTidy");
+//   alt.removeIpl("farm_burnt");
+//   alt.removeIpl("farm_burnt_lod");
+//   alt.removeIpl("farm_burnt_props");
+//   alt.removeIpl("farmint_cap");
+//   alt.removeIpl("farmint_cap_lod");
+//   alt.requestIpl("farm");
+//   alt.requestIpl("farmint");
+//   alt.requestIpl("farm_lod");
+//   alt.requestIpl("farm_props");
+//   alt.requestIpl("facelobby");
+//   alt.removeIpl("CS1_02_cf_offmission");
+//   alt.requestIpl("CS1_02_cf_onmission1");
+//   alt.requestIpl("CS1_02_cf_onmission2");
+//   alt.requestIpl("CS1_02_cf_onmission3");
+//   alt.requestIpl("CS1_02_cf_onmission4");
+//   alt.requestIpl("v_rockclub");
+//   alt.requestIpl("v_janitor");
+//   alt.removeIpl("hei_bi_hw1_13_door");
+//   alt.requestIpl("bkr_bi_hw1_13_int");
+//   alt.requestIpl("ufo");
+//   alt.requestIpl("ufo_lod");
+//   alt.requestIpl("ufo_eye");
+//   alt.removeIpl("v_carshowroom");
+//   alt.removeIpl("shutter_open");
+//   alt.removeIpl("shutter_closed");
+//   alt.removeIpl("shr_int");
+//   alt.requestIpl("csr_afterMission");
+//   alt.requestIpl("v_carshowroom");
+//   alt.requestIpl("shr_int");
+//   alt.requestIpl("shutter_closed");
+//   alt.requestIpl("smboat");
+//   alt.requestIpl("smboat_distantlights");
+//   alt.requestIpl("smboat_lod");
+//   alt.requestIpl("smboat_lodlights");
+//   alt.requestIpl("cargoship");
+//   alt.requestIpl("railing_start");
+//   alt.removeIpl("sp1_10_fake_interior");
+//   alt.removeIpl("sp1_10_fake_interior_lod");
+//   alt.requestIpl("sp1_10_real_interior");
+//   alt.requestIpl("sp1_10_real_interior_lod");
+//   alt.removeIpl("id2_14_during_door");
+//   alt.removeIpl("id2_14_during1");
+//   alt.removeIpl("id2_14_during2");
+//   alt.removeIpl("id2_14_on_fire");
+//   alt.removeIpl("id2_14_post_no_int");
+//   alt.removeIpl("id2_14_pre_no_int");
+//   alt.removeIpl("id2_14_during_door");
+//   alt.requestIpl("id2_14_during1");
+//   alt.removeIpl("Coroner_Int_off");
+//   alt.requestIpl("coronertrash");
+//   alt.requestIpl("Coroner_Int_on");
+//   alt.removeIpl("bh1_16_refurb");
+//   alt.removeIpl("jewel2fake");
+//   alt.removeIpl("bh1_16_doors_shut");
+//   alt.requestIpl("refit_unload");
+//   alt.requestIpl("post_hiest_unload");
+//   alt.requestIpl("Carwash_with_spinners");
+//   alt.requestIpl("KT_CarWash");
+//   alt.requestIpl("ferris_finale_Anim");
+//   alt.removeIpl("ch1_02_closed");
+//   alt.requestIpl("ch1_02_open");
+//   alt.requestIpl("AP1_04_TriAf01");
+//   alt.requestIpl("CS2_06_TriAf02");
+//   alt.requestIpl("CS4_04_TriAf03");
+//   alt.removeIpl("scafstartimap");
+//   alt.requestIpl("scafendimap");
+//   alt.removeIpl("DT1_05_HC_REMOVE");
+//   alt.requestIpl("DT1_05_HC_REQ");
+//   alt.requestIpl("DT1_05_REQUEST");
+//   alt.requestIpl("FINBANK");
+//   alt.removeIpl("DT1_03_Shutter");
+//   alt.removeIpl("DT1_03_Gr_Closed");
+//   alt.requestIpl("golfflags");
+//   alt.requestIpl("airfield");
+//   alt.requestIpl("v_garages");
+//   alt.requestIpl("v_foundry");
+//   alt.requestIpl("hei_yacht_heist");
+//   alt.requestIpl("hei_yacht_heist_Bar");
+//   alt.requestIpl("hei_yacht_heist_Bedrm");
+//   alt.requestIpl("hei_yacht_heist_Bridge");
+//   alt.requestIpl("hei_yacht_heist_DistantLights");
+//   alt.requestIpl("hei_yacht_heist_enginrm");
+//   alt.requestIpl("hei_yacht_heist_LODLights");
+//   alt.requestIpl("hei_yacht_heist_Lounge");
+//   alt.requestIpl("hei_carrier");
+//   alt.requestIpl("hei_Carrier_int1");
+//   alt.requestIpl("hei_Carrier_int2");
+//   alt.requestIpl("hei_Carrier_int3");
+//   alt.requestIpl("hei_Carrier_int4");
+//   alt.requestIpl("hei_Carrier_int5");
+//   alt.requestIpl("hei_Carrier_int6");
+//   alt.requestIpl("hei_carrier_LODLights");
+//   alt.requestIpl("bkr_bi_id1_23_door");
+//   alt.requestIpl("lr_cs6_08_grave_closed");
+//   alt.requestIpl("hei_sm_16_interior_v_bahama_milo_");
+//   alt.requestIpl("CS3_07_MPGates");
+//   alt.requestIpl("cs5_4_trains");
+//   alt.requestIpl("v_lesters");
+//   alt.requestIpl("v_trevors");
+//   alt.requestIpl("v_michael");
+//   alt.requestIpl("v_comedy");
+//   alt.requestIpl("v_cinema");
+//   alt.requestIpl("V_Sweat");
+//   alt.requestIpl("V_35_Fireman");
+//   alt.requestIpl("redCarpet");
+//   alt.requestIpl("triathlon2_VBprops");
+//   alt.requestIpl("jetstealturnel");
+//   alt.requestIpl("Jetsteal_ipl_grp1");
+//   alt.requestIpl("v_hospital");
+//   alt.removeIpl("RC12B_Default");
+//   alt.removeIpl("RC12B_Fixed");
+//   alt.requestIpl("RC12B_Destroyed");
+//   alt.requestIpl("RC12B_HospitalInterior");
+//   alt.requestIpl("canyonriver01");
+// }
+function drawZZ(){
+  alt.setInterval(() => {
+    game.drawLine(positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMin, positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMin, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMin, positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMin, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMin, positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMin, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMin, positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMin, 0, 255, 0, 255);
+
+  game.drawLine(positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMax, positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMax, positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMax, positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMax, positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+
+  game.drawLine(positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMin, positions[myTeam].zz.x1, positions[myTeam].zz.y1, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMin, positions[myTeam].zz.x2, positions[myTeam].zz.y2, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMin, positions[myTeam].zz.x3, positions[myTeam].zz.y3, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+  game.drawLine(positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMin, positions[myTeam].zz.x4, positions[myTeam].zz.y4, positions[myTeam].zz.zMax, 0, 255, 0, 255);
+
+  }, 5);
+
+}
+
+function drawLabels(){
+  const pos = new alt.Vector3(positions[myTeam].vehicle.x, positions[myTeam].vehicle.y, positions[myTeam].vehicle.z);
+const pos2 = new alt.Vector3(positions[myTeam].weapon.x, positions[myTeam].weapon.y, positions[myTeam].weapon.z);
+const pos3 = new alt.Vector3(positions[myTeam].shop247.x, positions[myTeam].shop247.y, positions[myTeam].shop247.z);
+  return alt.everyTick(() => {
+alt.Utils.drawText3dThisFrame(`Магазин оружия`, pos2.add(0,0,1), 7, 0.4,  alt.RGBA.white, true, true, 0);//, 2);
+alt.Utils.drawText3dThisFrame(`Магазин 24/7`, pos3.add(0,0,1), 7, 0.4,  alt.RGBA.white, true, true, 0);
+alt.Utils.drawText3dThisFrame(`Магазин авто`, pos.add(0,0,1), 7, 0.4,  alt.RGBA.white, true, true, 0);
+});
+
 }

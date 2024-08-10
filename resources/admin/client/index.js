@@ -151,6 +151,8 @@ alt.onServer("freeroam:Interiors", () => {
 
 alt.onServer("freeroam:sendNotification", drawNotification);
 
+alt.on("freeroam:sendNotification", drawNotification);
+
 export function drawNotification(imageName, headerMsg, detailsMsg, message) {
   game.beginTextCommandThefeedPost('STRING');
   game.addTextComponentSubstringPlayerName(message);
@@ -161,8 +163,8 @@ export function drawNotification(imageName, headerMsg, detailsMsg, message) {
       5,
       headerMsg,
       detailsMsg,
-      1.0,
+      0.1,
       ''
   );
-  game.endTextCommandThefeedPostTicker(false, false);
+  let result = game.endTextCommandThefeedPostTicker(false, false);
 }

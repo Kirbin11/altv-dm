@@ -275,3 +275,63 @@ chat.registerCmd("st", (player, args) => {
 // });
 
 // =============================== Commands End ====================================================
+chat.registerCmd("kick", (player, args) => {
+  if (player.getMeta("admin")) {
+    if (args.length > 0) {
+      let players = alt.Player.all.filter((p) => p.name === args.join(" "));
+      if (players.length != 0) {
+        for (const p of players) {
+          chat.send(p, `{FF0000}You was kicked from the server`);
+          chat.broadcast(`{5555AA}${p.name} {FFFFFF}kicked`);
+          p.kick("You was kicked from the server");
+        }
+      } else {
+        for (const p of players) {
+          if (p.name.startsWith(args.join(" "))) {
+            chat.send(p, `{FF0000}You was kicked from the server`);
+            chat.broadcast(`{5555AA}${p.name} {FFFFFF}kicked`);
+            p.kick("You was kicked from the server");
+          }
+        }
+      }
+    }
+  } else {
+    chat.send(player, "{FF00FF}You don`t have enough permissions to use this command");
+  }
+});
+
+chat.registerCmd("ban", (player, args) => {
+  if (player.getMeta("admin")) {
+    if (args.length > 0) {
+      let players = alt.Player.all.filter((p) => p.name === args.join(" "));
+
+      if (players.length != 0) {
+        for (const p of players) {
+          chat.send(p, `{FF0000}You was banned from the server`);
+          chat.broadcast(`{5555AA}${p.name} {FFFFFF}banned`);
+          addToBlacklist(p.getMeta("licenseHash"));
+          const discordId = p.getMeta("discordId");
+          if (discordId) {
+            addToBlacklist(discordId);
+          }
+          p.kick("You was banned from the server");
+        }
+      } else {
+        for (const p of players) {
+          if (p.name.startsWith(args.join(" "))) {
+            chat.send(p, `{FF0000}You was banned from the server`);
+            chat.broadcast(`{5555AA}${p.name} {FFFFFF}banned`);
+            addToBlacklist(p.getMeta("licenseHash"));
+            const discordId = p.getMeta("discordId");
+            if (discordId) {
+              addToBlacklist(discordId);
+            }
+            p.kick("You was banned from the server");
+          }
+        }
+      }
+    }
+  } else {
+    chat.send(player, "{FF00FF}You don`t have enough permissions to use this command");
+  }
+});

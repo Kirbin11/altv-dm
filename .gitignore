@@ -1,1 +1,4 @@
 server.toml
+server.log
+.vs
+.server-crashes-cache

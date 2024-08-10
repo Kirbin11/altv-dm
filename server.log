@@ -1,70 +1,99 @@
-[19:53:25] alt:V Server 16.1.1 (release)
-[19:53:25] Starting alt:V Server on [::]:7788
-[19:53:25] Loading resource weapon-addon
-[19:53:25] Loaded resource weapon-addon
-[19:53:25] Loading resource vehicle-addon
-[19:53:25] Loaded resource vehicle-addon
-[19:53:25] Loading resource chat
-[19:53:25] Loaded resource chat
-[19:53:25] Loading resource admin
-[19:53:25][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
-[19:53:25][Warning] Import 'alt:chat' instead to silence this warning.
-[19:53:25] Loaded resource admin
-[19:53:25] Loading resource gangwar
-[19:53:25][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
-[19:53:25][Warning] Import 'alt:chat' instead to silence this warning.
-[19:53:25] Loaded resource gangwar
-[19:53:25] Loading resource anims
-[19:53:25] Loaded resource anims
-[19:53:25] Loading resource streetnames
-[19:53:25] Loaded resource streetnames
-[19:53:25] Loading resource wasted
-[19:53:26] Loaded resource wasted
-[19:53:26] Loading resource pickups
-[19:53:26] Loaded resource pickups
-[19:53:26] Loading resource players-list
-[19:53:26] Loaded resource players-list
-[19:53:26] Loading resource veh-spawner
-[19:53:26] Loaded resource veh-spawner
-[19:53:26] Loading resource speedometer
-[19:53:26] Loaded resource speedometer
-[19:53:26] Loading resource hitmarker
-[19:53:26] Loaded resource hitmarker
-[19:53:26] Loading resource weapons-shop
-[19:53:26] Loaded resource weapons-shop
-[19:53:26] Loading resource noclip
-[19:53:26] Loaded resource noclip
-[19:53:26] Required server permissions:
-[19:53:26] Optional server permissions:
-[19:53:26] Starting HTTP server on [::]:7788
-[19:53:26] Main thread started (ThreadId: 22080)
-[19:53:26] EntityStreamer thread started (ThreadId: 20568)
-[19:53:26] SyncSend thread started (ThreadId: 14260)
-[19:53:26] SyncSend thread started (ThreadId: 17328)
-[19:53:26] SyncSend thread started (ThreadId: 5952)
-[19:53:26] SyncSend thread started (ThreadId: 21388)
-[19:53:26] SyncSend thread started (ThreadId: 32)
-[19:53:26] SyncSend thread started (ThreadId: 19264)
-[19:53:26] SyncSend thread started (ThreadId: 20800)
-[19:53:26] SyncSend thread started (ThreadId: 19852)
-[19:53:26] NetworkWorker #1 thread started (ThreadId: 18596)
-[19:53:26] SyncReceive thread started (ThreadId: 20848)
-[19:53:26] SyncReceive thread started (ThreadId: 18328)
-[19:53:26] SyncReceive thread started (ThreadId: 12664)
-[19:53:26] SyncReceive thread started (ThreadId: 3440)
-[19:53:26] Console thread started (ThreadId: 16360)
-[19:53:26][Warning] Server started in debug mode
-[19:54:43] Sending accept 1 kirbin
-[19:54:43] kirbin connected
-[19:54:44] View loaded for kirbin
-[19:54:49] kirbin joined ballas
-[19:54:49] here Vector3{ x: 0.0000, y: 0.0000, z: 1.2924 }
-[19:54:49] createForPlayer [object Object]
-[19:54:49] spawnPickups caught in Pickups
-[19:54:49] sent spawnPickups
-[19:55:00] [chat:cmd] kirbin: /pos
-[19:55:00] Position: 88.45714569091797, -2017.5560302734375, 20.905517578125
-[19:55:05] [chat:cmd] kirbin: /pos
-[19:55:05] Position: 20.76923179626465, -1786.5889892578125, 71.994140625
-[19:55:08] [chat:cmd] kirbin: /pos
-[19:55:08] Position: -20.057140350341797, -1694.5977783203125, 34.2506103515625
+[18:18:18] alt:V Server 16.1.10 (release)
+[18:18:18] Starting alt:V Server on [::]:7788
+[18:18:18] Loading resource weapon-addon
+[18:18:18] Loaded resource weapon-addon
+[18:18:18] Loading resource vehicle-addon
+[18:18:18] Loaded resource vehicle-addon
+[18:18:18] Loading resource chat
+[18:18:18] Loaded resource chat
+[18:18:18] Loading resource admin
+[18:18:18][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
+[18:18:18][Warning] Import 'alt:chat' instead to silence this warning.
+[18:18:18] Loaded resource admin
+[18:18:18] Loading resource gangwar
+[18:18:18][Warning] Trying to import resource 'chat' without 'alt:' prefix, this is deprecated behaviour.
+[18:18:18][Warning] Import 'alt:chat' instead to silence this warning.
+[18:18:18] Loaded resource gangwar
+[18:18:18] Loading resource anims
+[18:18:18] Loaded resource anims
+[18:18:18] Loading resource mini-info
+[18:18:18] Loaded resource mini-info
+[18:18:18] Loading resource wasted
+[18:18:18] Loaded resource wasted
+[18:18:18] Loading resource pickups
+[18:18:19] Loaded resource pickups
+[18:18:19] Loading resource players-list
+[18:18:19] Loaded resource players-list
+[18:18:19] Loading resource veh-shop
+[18:18:19] Loaded resource veh-shop
+[18:18:19] Loading resource speedometer
+[18:18:19] Loaded resource speedometer
+[18:18:19] Loading resource hitmarker
+[18:18:19] Loaded resource hitmarker
+[18:18:19] Loading resource weapons-shop
+[18:18:19] Loaded resource weapons-shop
+[18:18:19] Loading resource noclip
+[18:18:19] Loaded resource noclip
+[18:18:19] Loading resource 247-shop
+[18:18:19] Loaded resource 247-shop
+[18:18:19] Required server permissions:
+[18:18:19] Optional server permissions:
+[18:18:19] Starting HTTP server on [::]:7788
+[18:18:19] Main thread started (ThreadId: 19228)
+[18:18:19] EntityStreamer thread started (ThreadId: 18188)
+[18:18:19] SyncSend thread started (ThreadId: 17632)
+[18:18:19] SyncSend thread started (ThreadId: 17696)
+[18:18:19] SyncSend thread started (ThreadId: 14132)
+[18:18:19] SyncSend thread started (ThreadId: 12320)
+[18:18:19] SyncSend thread started (ThreadId: 17852)
+[18:18:19] SyncSend thread started (ThreadId: 7176)
+[18:18:19] SyncSend thread started (ThreadId: 16732)
+[18:18:19] SyncSend thread started (ThreadId: 19568)
+[18:18:19] NetworkWorker #1 thread started (ThreadId: 21436)
+[18:18:19] SyncReceive thread started (ThreadId: 19484)
+[18:18:19] SyncReceive thread started (ThreadId: 2880)
+[18:18:19] SyncReceive thread started (ThreadId: 3424)
+[18:18:19] SyncReceive thread started (ThreadId: 1472)
+[18:18:19] Console thread started (ThreadId: 20332)
+[18:18:19][Warning] Server started in debug mode
+[18:18:21] kirbin connected
+[18:18:22][Error] [V8] Exception at gangwar:file:///C:/SERVERGTA/altv-server/resources/gangwar/server/index.js:445
+[18:18:22][Error]       if (colshape == checkpoints[pTeam].zz) {
+[18:18:22][Error]   TypeError: Cannot read properties of undefined (reading 'zz')
+    at file:///C:/SERVERGTA/altv-server/resources/gangwar/server/index.js:445:40
+[18:18:22][Error] TypeError: Cannot read properties of undefined (reading 'zz')
+[18:18:22] View loaded for kirbin
+[18:18:22] kirbin joined vagos
+[18:19:57] alt::CVoiceManager::Stop begin
+[18:19:57] alt::CVoiceManager::Stop end
+[18:19:57] Stopping resource weapon-addon
+[18:19:57] Stopped resource weapon-addon
+[18:19:57] Stopping resource gangwar
+[18:19:57] Stopped resource gangwar
+[18:19:57] Stopping resource hitmarker
+[18:19:57] Stopped resource hitmarker
+[18:19:57] Stopping resource vehicle-addon
+[18:19:57] Stopped resource vehicle-addon
+[18:19:57] Stopping resource wasted
+[18:19:57] Stopped resource wasted
+[18:19:57] Stopping resource chat
+[18:19:57] Stopping resource admin
+[18:19:57] Stopped resource admin
+[18:19:57] Stopped resource chat
+[18:19:57] Stopping resource players-list
+[18:19:57] Stopped resource players-list
+[18:19:57] Stopping resource anims
+[18:19:58] Stopped resource anims
+[18:19:58] Stopping resource pickups
+[18:19:58] Stopped resource pickups
+[18:19:58] Stopping resource veh-shop
+[18:19:58] Stopped resource veh-shop
+[18:19:58] Stopping resource speedometer
+[18:19:58] Stopped resource speedometer
+[18:19:58] Stopping resource weapons-shop
+[18:19:58] Stopped resource weapons-shop
+[18:19:58] Stopping resource noclip
+[18:19:58] Stopped resource noclip
+[18:19:58] Stopping resource 247-shop
+[18:19:58] Stopped resource 247-shop
+[18:19:58] Server shutdown

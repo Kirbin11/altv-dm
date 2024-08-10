@@ -4,7 +4,6 @@ import fs from "fs";
 import { resolve, dirname } from "path";
 
 const __dirname = dirname(decodeURI(new URL(import.meta.url).pathname)).replace(/^\/([A-Za-z]):\//, "$1:/");
-
 let blacklistData = {};
 if (fs.existsSync(__dirname + "/blacklist.json")) {
   blacklistData = JSON.parse(fs.readFileSync(__dirname + "/blacklist.json").toString());
@@ -82,58 +81,106 @@ const colors = {
 const positions = {
   vagos: {
     spawns: [
-      { x: 334.6681, y: -2052.6726, z: 20.8212 },
-      { x: 341.789, y: -2051.3669, z: 21.3267 },
-      { x: 345.7582, y: -2044.6812, z: 21.63 },
-      { x: 342.3955, y: -2040.356, z: 21.5626 },
-      { x: 351.2835, y: -2043.2043, z: 22.0007 },
+      { x: 348.5, y: -2052.6, z: 20.6 },
+      { x: 335.6, y: -2053.5, z: 19.8 },
+      { x: 353, y: -2050.9, z: 20.8 }
     ],
-    weapon: { x: 359.5912, y: -2060.611, z: 21.4952 },
-    vehicle: { x: 330.9758, y: -2036.6241, z: 20.9897 },
+    weapon: { x: 352.6, y: -2036.4, z: 21.3 },
+    vehicle: { x: 332.7, y: -2037.4, z: 20 },
+    shop247: { x: 316.7, y: -2015.2, z: 19.6 },
+    zz: { vectors: [new alt.Vector2(312.9, -1998.1), new alt.Vector2(290.6,-2024.2), new alt.Vector2(359.2, -2089.2), new alt.Vector2(389.5, -2053.3)],
+      zMin: 19, zMax: 29, zMid:21
+    },
+    zz2: { x1: 312.9, y1: -1998.1,
+      x2: 290.6, y2: -2024.2,
+      x3: 359.2, y3: -2089.2,
+      x4: 389.5, y4: -2053.3,
+      zMin: 19, zMax: 29, zMid:21
+     }
   },
   ballas: {
     spawns: [
-      { x: 88.6285, y: -1959.389, z: 20.737 },
-      { x: 109.3054, y: -1955.8022, z: 20.737 },
-      { x: 117.7318, y: -1947.7583, z: 20.72 },
-      { x: 118.9186, y: -1934.2681, z: 20.7707 },
-      { x: 105.7318, y: -1923.4154, z: 20.737 },
+      { x: -71.4, y: -1833.1, z: 25.9 },
+      { x: -74.5, y: -1840.4, z: 25.9 },
+      { x: -65, y: -1822.9, z: 25.9 }
     ],
-    weapon: { x: 97, y: -1951, z: 20 },
-    vehicle: { x: 111, y: -1945, z: 20 },
+    weapon: { x: -72.5, y: -1821.6, z: 25.9 },
+    vehicle: { x: -49.9, y: -1845.8, z: 25.2 },
+    shop247: { x: -73, y: -1835.4, z: 25.9 },
+    zz: { vectors: [new alt.Vector2(-33, -1837.4), new alt.Vector2(-65.9, -1809.2), new alt.Vector2(-86.1, -1834.9), new alt.Vector2(-52, -1862.9)],
+      zMin: 24, zMax: 34, zMid:26
+    },
+    zz2: { x1: -33, y1: -1837.4,
+      x2: -65.9, y2: -1809.2,
+      x3: -86.1, y3: -1834.9,
+      x4: -52, y4: -1862.9,
+      zMin: 24, zMax: 34, zMid:26
+     }
   },
   families: {
     spawns: [
-      { x: -196.4439, y: -1607.0505, z: 34.1494 },
-      { x: -174.356, y: -1609.978, z: 33.7281 },
-      { x: -175.0681, y: -1623.1647, z: 33.5596 },
-      { x: -191.1692, y: -1641.4813, z: 33.408 },
-      { x: -183.5736, y: -1587.5999, z: 34.8234 },
+      { x: -216, y: -1499.7, z: 30.1 },
+      { x: -223, y: -1515.2, z: 30.5 },
+      { x: -205, y: -1498.2, z: 30.5 }
     ],
-    weapon: { x: -210.7648, y: -1606.8132, z: 34.8571 },
-    vehicle: { x: -183.5736, y: -1587.5999, z: 34.8234 },
+    weapon: { x: -233, y: -1490.5, z: 32 },
+    vehicle: { x: -223.1, y: -1489.7, z: 30.2 },
+    shop247: { x: -239.3, y: -1470.2, z: 30.5 },
+    zz: { vectors: [new alt.Vector2(-194.4, -1488.5), new alt.Vector2(-233, -1458.7), new alt.Vector2(-259.6, -1500), new alt.Vector2(-229.3, -1528.6)],
+          zMin: 29, zMax: 39, zMid:31
+    },
+    zz2: { x1: -194.4, y1: -1488.5,
+      x2: -233, y2: -1458.7,
+      x3: -259.6, y3: -1500,
+      x4: -229.3, y4: -1528.6,
+      zMin: 29, zMax: 39, zMid:31
+     }
   },
 };
+let familiesBlip = new alt.PointBlip(positions.families.zz.x, positions.families.zz.y, positions.families.zz.z, true);
+familiesBlip.sprite = 543;
+familiesBlip.name = "Families";
+familiesBlip.alpha = 200;
+familiesBlip.color = 52;
 
+let ballasBlip = new alt.PointBlip(positions.ballas.zz.x, positions.ballas.zz.y, positions.ballas.zz.z, true);
+ballasBlip.sprite = 543;
+ballasBlip.name = "Ballas";
+ballasBlip.alpha = 200;
+ballasBlip.color = 27;
+
+let vagosBlip = new alt.PointBlip(positions.vagos.zz.x, positions.vagos.zz.y, positions.vagos.zz.z, true);
+vagosBlip.sprite = 543;
+vagosBlip.name = "Vagos";
+vagosBlip.alpha = 200;
+vagosBlip.color = 66;
 
 const checkpoints = {
   ballas: {
     vehicle: null,
     weapon: null,
+    shop247:null,
+    zz: null
   },
   families: {
     vehicle: null,
     weapon: null,
+    shop247:null,
+    zz: null
   },
   vagos: {
     vehicle: null,
     weapon: null,
+    shop247:null,
+    zz: null
   },
 };
 
 for (let i in positions) {
   checkpoints[i].vehicle = new alt.Checkpoint(45, new alt.Vector3(positions[i].vehicle.x, positions[i].vehicle.y, positions[i].vehicle.z), 1, 1, alt.RGBA.green, 100);
   checkpoints[i].weapon = new alt.Checkpoint(45, new alt.Vector3(positions[i].weapon.x, positions[i].weapon.y, positions[i].weapon.z), 0.5, 1, alt.RGBA.green, 100);
+  checkpoints[i].shop247 = new alt.Checkpoint(45, new alt.Vector3(positions[i].shop247.x, positions[i].shop247.y, positions[i].shop247.z), 0.5, 1, alt.RGBA.green, 100);
+  checkpoints[i].zz = new alt.ColshapePolygon(positions[i].zz.zMin, positions[i].zz.zMax, positions[i].zz.vectors);//new alt.Checkpoint(45, new alt.Vector3(positions[i].zz.x, positions[i].zz.y, positions[i].zz.z), 20, 5, alt.RGBA.green, 200);
 }
 
 const currentTurfPoints = {
@@ -252,6 +299,7 @@ function getTeamsPopulation() {
   return population;
 }
 
+
 function broadcastTeamsPopulation() {
   for (let p of alt.Player.all) {
     if (p.getMeta("selectingTeam")) {
@@ -276,67 +324,6 @@ alt.onClient("authData", (player, data) => {
   if (licenseHash in blacklistData || (dsInfo !== null && dsInfo in blacklistData)) {
     chat.broadcast(`{5555AA}${player.name} {FFFFFF}kicked (Blacklisted)`);
     player.kick();
-  }
-});
-
-chat.registerCmd("kick", (player, args) => {
-  if (player.getMeta("admin")) {
-    if (args.length > 0) {
-      let players = alt.Player.all.filter((p) => p.name === args.join(" "));
-      if (players.length != 0) {
-        for (const p of players) {
-          chat.send(p, `{FF0000}You was kicked from the server`);
-          chat.broadcast(`{5555AA}${p.name} {FFFFFF}kicked`);
-          p.kick("You was kicked from the server");
-        }
-      } else {
-        for (const p of players) {
-          if (p.name.startsWith(args.join(" "))) {
-            chat.send(p, `{FF0000}You was kicked from the server`);
-            chat.broadcast(`{5555AA}${p.name} {FFFFFF}kicked`);
-            p.kick("You was kicked from the server");
-          }
-        }
-      }
-    }
-  } else {
-    chat.send(player, "{FF00FF}You don`t have enough permissions to use this command");
-  }
-});
-
-chat.registerCmd("ban", (player, args) => {
-  if (player.getMeta("admin")) {
-    if (args.length > 0) {
-      let players = alt.Player.all.filter((p) => p.name === args.join(" "));
-
-      if (players.length != 0) {
-        for (const p of players) {
-          chat.send(p, `{FF0000}You was banned from the server`);
-          chat.broadcast(`{5555AA}${p.name} {FFFFFF}banned`);
-          addToBlacklist(p.getMeta("licenseHash"));
-          const discordId = p.getMeta("discordId");
-          if (discordId) {
-            addToBlacklist(discordId);
-          }
-          p.kick("You was banned from the server");
-        }
-      } else {
-        for (const p of players) {
-          if (p.name.startsWith(args.join(" "))) {
-            chat.send(p, `{FF0000}You was banned from the server`);
-            chat.broadcast(`{5555AA}${p.name} {FFFFFF}banned`);
-            addToBlacklist(p.getMeta("licenseHash"));
-            const discordId = p.getMeta("discordId");
-            if (discordId) {
-              addToBlacklist(discordId);
-            }
-            p.kick("You was banned from the server");
-          }
-        }
-      }
-    }
-  } else {
-    chat.send(player, "{FF00FF}You don`t have enough permissions to use this command");
   }
 });
 
@@ -394,11 +381,12 @@ alt.onClient("teamSelected", (player, teamId) => {
   console.log("Spawning in " + JSON.stringify(spawn));
   player.model = "mp_m_freemode_01";
   player.spawn(spawn.x, spawn.y, spawn.z, 0);
-  alt.emitClient(player, "applyAppearance", team);
-  alt.emitClient(player, "updateTeam", team);
+  alt.setTimeout(()=>{
 
-  alt.emit('spawnPickups', player);
-  alt.log('sent spawnPickups');
+    alt.emitClient(player, "applyAppearance", team);
+  }, 500);
+  //
+  alt.emitClient(player, "updateTeam", team);
   if (currentTurf != null) {
     alt.emitAllClients("captureStateChanged", true);
     alt.emitAllClients("startCapture", {
@@ -409,10 +397,16 @@ alt.onClient("teamSelected", (player, teamId) => {
     });
     alt.emitAllClients("updateTeamPoints", currentTurfPoints);
   }
+  player.setMeta("overPickup", 0);
 });
 
 alt.onClient("action", (player) => {
   const cp = player.getMeta("checkpoint");
+  const pickup = player.getMeta("overPickup");
+  if (pickup != 0) {
+    alt.emit('pickingUp', pickup, player);
+    alt.emitClient(player, 'playAnimPickup');
+  }
   if (cp == 1) {
     const nextTimeSpawn = player.getMeta("canSpawnVehicle");
     if (nextTimeSpawn > Date.now()) return;
@@ -439,26 +433,60 @@ alt.onClient("action", (player) => {
     alt.emitClient(player, 'chooseWeapons');
     //giveWeapons(player);
   }
+  else if (cp == 3) {
+    alt.emitClient(player, 'chooseProducts');
+    //giveWeapons(player);
+  }
 });
 
 alt.on("entityEnterColshape", (colshape, entity) => {
   if (entity instanceof alt.Player) {
     const pTeam = entity.getMeta("team");
+    if (colshape == checkpoints[pTeam].zz) {
+      entity.setSyncedMeta("ZZ", "1");
+      alt.emitClient(entity, 'enteredGreenZone');
+    }
     if (colshape == checkpoints[pTeam].vehicle) {
       entity.setMeta("checkpoint", 1);
       alt.emitClient(entity, "showInfo", "~INPUT_PICKUP~ to get car");
     } else if (colshape == checkpoints[pTeam].weapon) {
       entity.setMeta("checkpoint", 2);
       alt.emitClient(entity, "showInfo", "~INPUT_PICKUP~ to get weapons and ammo");
+    } else if (colshape == checkpoints[pTeam].shop247) {
+      entity.setMeta("checkpoint", 3);
+      alt.emitClient(entity, "showInfo", "~INPUT_PICKUP~ to get heals");
     }
   }
 });
 
 alt.on("entityLeaveColshape", (colshape, entity) => {
   if (entity instanceof alt.Player) {
-    entity.setMeta("checkpoint", 0);
+    const pTeam = entity.getMeta("team");
+    if (colshape == checkpoints[pTeam].zz) {
+      entity.setSyncedMeta("ZZ", "0");
+      alt.emitClient(entity, 'exitedGreenZone');
+    }
+    else {
+      entity.setMeta("checkpoint", 0);
+    }
+
   }
 });
+
+
+alt.on('playerDamage',(player, attacker, weapon, damage, armourDamage) => {
+  if(player.armour <= 0){
+    player.setClothes(9, 0, 0);
+  }
+}
+);
+
+// alt.on('playerWeaponChange',(player, oldWeapon, newWeapon) => {
+//   alt.log('changed weapon from '+ oldWeapon+ ' to ' + newWeapon);
+//   player.setMeta('currentWeapon', newWeapon);
+// }
+// );
+
 
 alt.on("playerDeath", (player, killer, weapon) => {
   let weaponName = "Killed";
@@ -470,6 +498,10 @@ alt.on("playerDeath", (player, killer, weapon) => {
   const team = player.getMeta("team");
   if (!killer) killer = player;
 
+  //alt.log('currentWeapon property '+ player.currentWeapon);
+  //alt.log('currentWeapon meta '+ player.getMeta('currentWeapon'));
+ //(player.getMeta('currentWeapon') > 0) {
+    alt.emit('spawnPickups', player);
   alt.setTimeout(() => {
     const nextSpawns = positions[team].spawns;
   const spawnPos = nextSpawns[Math.round(Math.random() * (nextSpawns.length - 1))];
